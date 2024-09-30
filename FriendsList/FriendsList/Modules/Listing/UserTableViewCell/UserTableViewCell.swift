@@ -7,6 +7,12 @@
 
 import UIKit
 
+struct ListingViewArguments {
+    var picture: String?
+    var name: String?
+    var nationality: String?
+}
+
 class UserTableViewCell: UITableViewCell {
 
     @IBOutlet private weak var mainStackView: UIStackView!
@@ -22,5 +28,12 @@ class UserTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+
+    func configure(argument: ListingViewArguments) {
+        nameLabel.text = argument.name
+        nationalityLabel.text = argument.nationality
+        guard let url = argument.picture else { return }
+        profileImageView.setImage(from: url)
     }
 }
