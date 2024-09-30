@@ -15,18 +15,18 @@ public enum HTTPMethod: String {
 }
 
 public enum NetworkRouter {
-    case userRepos(user: String, page: Int)
-
+    case users
+    
     public var method: HTTPMethod {
         switch self {
-        case .userRepos(user: _, page: _):
+        case .users:
             return .get
         }
     }
-
+    
     public var path: String {
         switch self {
-        case .userRepos(user: let user, page: let page):
+        case .users:
             return APIConstants.shared.randomUserBaseURL + "api/?results=20"
         }
     }
@@ -41,7 +41,7 @@ enum NetworkError: Error {
 class NetworkManager {
     static let shared = NetworkManager(session: URLSession(configuration: .default))
     private let session: URLSession
-
+    
     init(session: URLSession) {
         self.session = session
     }
