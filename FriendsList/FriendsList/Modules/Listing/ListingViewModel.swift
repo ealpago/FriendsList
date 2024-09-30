@@ -18,7 +18,7 @@ final class ListingViewModel {
     weak var view: ListingViewInterface?
     private var users = [ResponseResult]()
 
-    func fetchData() {
+    func fetchData(completion: @escaping()->()) {
         view?.showLoadingIndicator()
         RandomUserManager.shared.fetchRandomUser { [weak self] result in
             self?.view?.hideLoadingIndicator()
@@ -26,10 +26,13 @@ final class ListingViewModel {
             case .success(let response):
                 guard let userList = response.results else { return }
                 self?.users = userList
+                completion()
             case .failure(let error):
-                self?.view?.showError(title: "Error", message: error.localizedDescription, buttonTitle: "OK", completion: {
-                    self?.view?.popToRoot()
-                })
+                DispatchQueue.main.async {
+                    self?.view?.showError(title: "Error", message: error.localizedDescription, buttonTitle: "OK", completion: {
+                        self?.view?.popToRoot()
+                    })
+                }
             }
         }
     }
@@ -38,8 +41,9 @@ final class ListingViewModel {
 extension ListingViewModel: ListingViewModelInterface{
     func viewDidLoad() {
         view?.prepareTableView()
-        fetchData()
-        view?.reloadData()
+        fetchData() {
+            self.view?.reloadData()
+        }
     }
     
     var numberOfRowsInSection: Int {

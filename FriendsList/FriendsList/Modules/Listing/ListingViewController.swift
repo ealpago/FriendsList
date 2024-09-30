@@ -20,6 +20,7 @@ final class ListingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.view = self
         viewModel.viewDidLoad()
     }
 }
