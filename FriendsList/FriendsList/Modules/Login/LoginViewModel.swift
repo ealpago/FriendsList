@@ -22,7 +22,9 @@ final class LoginViewModel {
 
 //MARK: Extension
 extension LoginViewModel: LoginViewModelInterface {
-    func viewDidLoad() {}
+    func viewDidLoad() {
+        view?.prepareUI()
+    }
 
     func loginButtonTapped() {
         guard let userName = view?.userName, !userName.isEmpty, let password = view?.password, !password.isEmpty else {

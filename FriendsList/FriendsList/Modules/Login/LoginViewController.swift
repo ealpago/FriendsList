@@ -12,6 +12,7 @@ protocol LoginViewInterface: AnyObject, AlertPresentable {
     var userName: String { get }
     var password: String { get }
 
+    func prepareUI()
     func pushVC()
     func checkValidUsername(_ userName: String) -> Bool
 }
@@ -37,14 +38,41 @@ final class LoginViewController: UIViewController {
         viewModel.viewDidLoad()
     }
 
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+
     //MARK: Actions
     @IBAction private func loginButtonTappped(_ sender: UIButton) {
         viewModel.loginButtonTapped()
     }
 }
 
+//MARK: TextFieldDelegate
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        loginButton.isUserInteractionEnabled = false
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        loginButton.isUserInteractionEnabled = true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
 //MARK: Extension
 extension LoginViewController: LoginViewInterface {
+    func prepareUI() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        userNameTextField.delegate = self
+        passwordTextField.delegate = self
+    }
+
     func checkValidUsername(_ userName: String) -> Bool {
         let regexPattern = "^[a-z0-9]{5,7}$"
         let regex = try! NSRegularExpression(pattern: regexPattern)
