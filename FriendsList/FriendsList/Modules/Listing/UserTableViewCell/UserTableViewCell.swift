@@ -10,7 +10,13 @@ import UIKit
 struct ListingViewCellArguments {
     var picture: String?
     var name: String?
+    var surname: String?
     var nationality: String?
+
+    var fullName: String {
+        guard let name = name, let surname = surname else { return "" }
+        return name + " " + surname
+    }
 }
 
 class UserTableViewCell: UITableViewCell {
@@ -31,7 +37,7 @@ class UserTableViewCell: UITableViewCell {
     }
 
     func configure(argument: ListingViewCellArguments) {
-        nameLabel.text = argument.name
+        nameLabel.text = argument.fullName
         nationalityLabel.text = argument.nationality
         guard let url = argument.picture else { return }
         profileImageView.setImage(from: url)
