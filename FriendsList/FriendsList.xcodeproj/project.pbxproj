@@ -173,7 +173,6 @@
 				AE6E77703C537B627FB02B4A /* Pods-FriendsListTests.debug.xcconfig */,
 				8D177356CFC45D2D8229787A /* Pods-FriendsListTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -285,18 +284,8 @@
 		D1E17B6D2CAAE02C00F228A9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D1E17B852CAAF17E00F228A9 /* RandomUserResponse.swift */,
-				D1E17B872CAAF19C00F228A9 /* Result.swift */,
-				D1E17B892CAAF1B700F228A9 /* Picture.swift */,
-				D1E17B8B2CAAF1C500F228A9 /* Name.swift */,
-				D1E17B8D2CAAF1D900F228A9 /* Login.swift */,
-				D1E17B8F2CAAF1FC00F228A9 /* Location.swift */,
-				D1E17B912CAAF21100F228A9 /* Timezone.swift */,
-				D1E17B932CAAF22200F228A9 /* Street.swift */,
-				D1E17B952CAAF23300F228A9 /* Coordinate.swift */,
-				D1E17B972CAAF24200F228A9 /* Id.swift */,
-				D1E17B992CAAF25000F228A9 /* Dob.swift */,
-				D1E17B9B2CAAF25F00F228A9 /* Info.swift */,
+				D1E17BB42CAB4E8100F228A9 /* ResponseModels */,
+				D1E17BB32CAB4E7800F228A9 /* RealmModels */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -339,6 +328,32 @@
 				D1E17BA72CAAFBE100F228A9 /* UserTableViewCell.xib */,
 			);
 			path = UserTableViewCell;
+			sourceTree = "<group>";
+		};
+		D1E17BB32CAB4E7800F228A9 /* RealmModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RealmModels;
+			sourceTree = "<group>";
+		};
+		D1E17BB42CAB4E8100F228A9 /* ResponseModels */ = {
+			isa = PBXGroup;
+			children = (
+				D1E17B852CAAF17E00F228A9 /* RandomUserResponse.swift */,
+				D1E17B872CAAF19C00F228A9 /* Result.swift */,
+				D1E17B892CAAF1B700F228A9 /* Picture.swift */,
+				D1E17B8B2CAAF1C500F228A9 /* Name.swift */,
+				D1E17B8D2CAAF1D900F228A9 /* Login.swift */,
+				D1E17B8F2CAAF1FC00F228A9 /* Location.swift */,
+				D1E17B912CAAF21100F228A9 /* Timezone.swift */,
+				D1E17B932CAAF22200F228A9 /* Street.swift */,
+				D1E17B952CAAF23300F228A9 /* Coordinate.swift */,
+				D1E17B972CAAF24200F228A9 /* Id.swift */,
+				D1E17B992CAAF25000F228A9 /* Dob.swift */,
+				D1E17B9B2CAAF25F00F228A9 /* Info.swift */,
+			);
+			path = ResponseModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

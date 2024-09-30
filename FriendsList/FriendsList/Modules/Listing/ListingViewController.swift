@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 //MARK: Protocol
 protocol ListingViewInterface: AnyObject, AlertPresentable, ProgressIndicatorPresentable {
