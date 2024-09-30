@@ -7,14 +7,19 @@
 
 import Foundation
 
+//MARK: Protocol
 protocol DetailViewModelInterface {
     func viewDidLoad()
 }
 
+//MARK: ViewModel
 final class DetailViewModel {
+
+    //MARK: Properties
     weak var view: DetailViewInterface?
 }
 
+//MARK: Extension
 extension DetailViewModel: DetailViewModelInterface {
     func viewDidLoad() {
         view?.prepareUIConstraints()
