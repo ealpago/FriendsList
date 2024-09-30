@@ -17,6 +17,7 @@
 		D1E17B4E2CAADECA00F228A9 /* FriendsListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B4D2CAADECA00F228A9 /* FriendsListTests.swift */; };
 		D1E17B582CAADECA00F228A9 /* FriendsListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B572CAADECA00F228A9 /* FriendsListUITests.swift */; };
 		D1E17B5A2CAADECA00F228A9 /* FriendsListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B592CAADECA00F228A9 /* FriendsListUITestsLaunchTests.swift */; };
+		D1E17B722CAAE1A200F228A9 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B712CAAE1A200F228A9 /* AlertPresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		D1E17B532CAADECA00F228A9 /* FriendsListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FriendsListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E17B572CAADECA00F228A9 /* FriendsListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListUITests.swift; sourceTree = "<group>"; };
 		D1E17B592CAADECA00F228A9 /* FriendsListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		D1E17B712CAAE1A200F228A9 /* AlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 		D1E17B662CAADF2700F228A9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D1E17B712CAAE1A200F228A9 /* AlertPresentable.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				D1E17B342CAADEC700F228A9 /* AppDelegate.swift in Sources */,
 				D1E17B362CAADEC700F228A9 /* SceneDelegate.swift in Sources */,
 				D1E17B3E2CAADEC700F228A9 /* FriendsList.xcdatamodeld in Sources */,
+				D1E17B722CAAE1A200F228A9 /* AlertPresentable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
