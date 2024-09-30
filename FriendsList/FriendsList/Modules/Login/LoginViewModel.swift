@@ -29,6 +29,10 @@ extension LoginViewModel: LoginViewModelInterface {
             view?.showError(title: "Alert", message: "Username or Password is nil", buttonTitle: "OK", completion: {})
             return
         }
+        guard let isValidUserName = view?.checkValidUsername(userName), isValidUserName else {
+            view?.showError(title: "Alert", message: "Username is unvalid", buttonTitle: "OK", completion: {})
+            return
+        }
         view?.pushVC()
     }
 }

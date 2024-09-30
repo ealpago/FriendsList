@@ -13,6 +13,7 @@ protocol LoginViewInterface: AnyObject, AlertPresentable {
     var password: String { get }
 
     func pushVC()
+    func checkValidUsername(_ userName: String) -> Bool
 }
 
 //MARK: ViewController
@@ -44,6 +45,13 @@ final class LoginViewController: UIViewController {
 
 //MARK: Extension
 extension LoginViewController: LoginViewInterface {
+    func checkValidUsername(_ userName: String) -> Bool {
+        let regexPattern = "^[a-z0-9]{5,7}$"
+        let regex = try! NSRegularExpression(pattern: regexPattern)
+        let range = NSRange(location: 0, length: userName.utf16.count)
+        return regex.firstMatch(in: userName, options: [], range: range) != nil
+    }
+    
     var userName: String {
         userNameTextField.text ?? ""
     }
