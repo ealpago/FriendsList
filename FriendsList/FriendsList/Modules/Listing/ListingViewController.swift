@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: Protocol
 protocol ListingViewInterface: AnyObject, AlertPresentable, ProgressIndicatorPresentable {
     func popToRoot()
     func prepareTableView()
@@ -14,11 +15,16 @@ protocol ListingViewInterface: AnyObject, AlertPresentable, ProgressIndicatorPre
     func pushVC(argument: DetailViewArguments?)
 }
 
+//MARK: ViewControler
 final class ListingViewController: UIViewController {
+
+    //MARK: Outlets
     @IBOutlet private weak var usersTableView: UITableView!
 
+    //MARK: Properties
     private lazy var viewModel = ListingViewModel()
 
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.view = self
@@ -26,12 +32,14 @@ final class ListingViewController: UIViewController {
     }
 }
 
+//MARK: TableViewDelegate
 extension ListingViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfRowsInSection
     }
 }
 
+//MARK: TableViewDataSource
 extension ListingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier) as? UserTableViewCell else { return UITableViewCell() }
@@ -44,6 +52,7 @@ extension ListingViewController: UITableViewDataSource {
     }
 }
 
+//MARK: Extension
 extension ListingViewController: ListingViewInterface {
     func prepareTableView() {
         usersTableView.delegate = self

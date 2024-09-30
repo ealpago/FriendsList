@@ -15,6 +15,7 @@ protocol DetailViewInterface: AnyObject, AlertPresentable {
     func prepareMapKit()
 }
 
+//MARK: Arguments
 struct DetailViewArguments {
     var picture: String?
     var name: String?

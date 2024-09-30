@@ -7,15 +7,20 @@
 
 import Foundation
 
+//MARK: Protocol
 protocol LoginViewModelInterface {
     func viewDidLoad()
     func loginButtonTapped()
 }
 
+//MARK: ViewModel
 final class LoginViewModel {
+
+    //MARK: Properties
     weak var view: LoginViewInterface?
 }
 
+//MARK: Extension
 extension LoginViewModel: LoginViewModelInterface {
     func viewDidLoad() {}
 

@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: Protocol
 protocol ListingViewModelInterface {
     var numberOfRowsInSection: Int { get }
 
@@ -15,10 +16,14 @@ protocol ListingViewModelInterface {
     func didSelectRow(at index: Int)
 }
 
+//MARK: ViewModel
 final class ListingViewModel {
+
+    //MARK: Properties
     weak var view: ListingViewInterface?
     private var users = [ResponseResult]()
 
+    //MARK: Functions
     func fetchData(completion: @escaping()->()) {
         view?.showLoadingIndicator()
         RandomUserManager.shared.fetchRandomUser { [weak self] result in
@@ -39,6 +44,7 @@ final class ListingViewModel {
     }
 }
 
+//MARK: Extension
 extension ListingViewModel: ListingViewModelInterface{
     func viewDidLoad() {
         view?.prepareTableView()

@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: Protocol
 protocol LoginViewInterface: AnyObject, AlertPresentable {
     var userName: String { get }
     var password: String { get }
@@ -14,8 +15,10 @@ protocol LoginViewInterface: AnyObject, AlertPresentable {
     func pushVC()
 }
 
+//MARK: ViewController
 final class LoginViewController: UIViewController {
 
+    //MARK: Outlets
     @IBOutlet private weak var stackView: UIStackView!
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private weak var imageView: UIImageView!
@@ -26,17 +29,20 @@ final class LoginViewController: UIViewController {
     //MARK: Properties
     private lazy var viewModel = LoginViewModel()
 
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.view = self
         viewModel.viewDidLoad()
     }
 
+    //MARK: Actions
     @IBAction private func loginButtonTappped(_ sender: UIButton) {
         viewModel.loginButtonTapped()
     }
 }
 
+//MARK: Extension
 extension LoginViewController: LoginViewInterface {
     var userName: String {
         userNameTextField.text ?? ""
