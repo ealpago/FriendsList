@@ -37,6 +37,7 @@
 		D1E17B982CAAF24200F228A9 /* Id.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B972CAAF24200F228A9 /* Id.swift */; };
 		D1E17B9A2CAAF25000F228A9 /* Dob.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B992CAAF25000F228A9 /* Dob.swift */; };
 		D1E17B9C2CAAF25F00F228A9 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B9B2CAAF25F00F228A9 /* Info.swift */; };
+		D1E17B9E2CAAF30800F228A9 /* RandomUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B9D2CAAF30800F228A9 /* RandomUserManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +92,7 @@
 		D1E17B972CAAF24200F228A9 /* Id.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Id.swift; sourceTree = "<group>"; };
 		D1E17B992CAAF25000F228A9 /* Dob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dob.swift; sourceTree = "<group>"; };
 		D1E17B9B2CAAF25F00F228A9 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
+		D1E17B9D2CAAF30800F228A9 /* RandomUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomUserManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				D1E17B812CAAF05800F228A9 /* NetworkManager.swift */,
+				D1E17B9D2CAAF30800F228A9 /* RandomUserManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				D1E17B9A2CAAF25000F228A9 /* Dob.swift in Sources */,
 				D1E17B7E2CAAE34D00F228A9 /* LoginViewModel.swift in Sources */,
 				D1E17B902CAAF1FC00F228A9 /* Location.swift in Sources */,
+				D1E17B9E2CAAF30800F228A9 /* RandomUserManager.swift in Sources */,
 				D1E17B762CAAE20A00F228A9 /* UIView+Extension.swift in Sources */,
 				D1E17B882CAAF19C00F228A9 /* Result.swift in Sources */,
 				D1E17B822CAAF05800F228A9 /* NetworkManager.swift in Sources */,
