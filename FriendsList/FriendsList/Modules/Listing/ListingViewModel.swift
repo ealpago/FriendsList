@@ -53,9 +53,12 @@ extension ListingViewModel: ListingViewModelInterface{
 
     func cellForRow(at index: Int) -> ListingViewCellArguments {
         guard let name = users[index].name?.first, let surname = users[index].name?.last, let nationality = users[index].nat, let picture = users[index].picture?.thumbnail else { return ListingViewCellArguments() }
-        let fullName = "\(name) \(surname)"
-        return ListingViewCellArguments(picture: picture, name: fullName, nationality: nationality)
+        return ListingViewCellArguments(picture: picture, name: name, surname: surname, nationality: nationality)
     }
 
-    func didSelectRow(at index: Int) {}
+    func didSelectRow(at index: Int) {
+        guard let name = users[index].name?.first, let surname = users[index].name?.last, let nationality = users[index].nat, let picture = users[index].picture?.thumbnail, let id = users[index].id, let location = users[index].location else { return }
+        let argument = DetailViewArguments(picture: picture, name: name, surname: surname, id: id, nationality: nationality,location: location )
+        view?.pushVC(argument: argument)
+    }
 }

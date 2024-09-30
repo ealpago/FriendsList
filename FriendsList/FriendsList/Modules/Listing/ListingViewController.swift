@@ -11,6 +11,7 @@ protocol ListingViewInterface: AnyObject, AlertPresentable, ProgressIndicatorPre
     func popToRoot()
     func prepareTableView()
     func reloadData()
+    func pushVC(argument: DetailViewArguments?)
 }
 
 final class ListingViewController: UIViewController {
@@ -54,6 +55,13 @@ extension ListingViewController: ListingViewInterface {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             usersTableView.reloadData()
+        }
+    }
+
+    func pushVC(argument: DetailViewArguments?) {
+        if let vc = "DetailStoryboard".viewController(identifier: DetailViewController.identifier) as? DetailViewController {
+            vc.arguments = argument
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 
