@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+protocol DetailViewModelInterface {
+    func viewDidLoad()
+}
+
+final class DetailViewModel {
+    weak var view: DetailViewInterface?
+}
+
+extension DetailViewModel: DetailViewModelInterface {
+    func viewDidLoad() {
+        <#code#>
+    }
+}
