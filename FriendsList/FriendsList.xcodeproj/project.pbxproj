@@ -22,6 +22,9 @@
 		D1E17B762CAAE20A00F228A9 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B752CAAE20A00F228A9 /* UIView+Extension.swift */; };
 		D1E17B782CAAE23400F228A9 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B772CAAE23400F228A9 /* String+Extension.swift */; };
 		D1E17B7A2CAAE2D900F228A9 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B792CAAE2D900F228A9 /* UIViewController+Extension.swift */; };
+		D1E17B7C2CAAE34200F228A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B7B2CAAE34200F228A9 /* LoginViewController.swift */; };
+		D1E17B7E2CAAE34D00F228A9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B7D2CAAE34D00F228A9 /* LoginViewModel.swift */; };
+		D1E17B802CAAE35600F228A9 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1E17B7F2CAAE35600F228A9 /* LoginStoryboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +64,9 @@
 		D1E17B752CAAE20A00F228A9 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		D1E17B772CAAE23400F228A9 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		D1E17B792CAAE2D900F228A9 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		D1E17B7B2CAAE34200F228A9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D1E17B7D2CAAE34D00F228A9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D1E17B7F2CAAE35600F228A9 /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,9 +123,6 @@
 				D1E17B682CAADF4200F228A9 /* Managers */,
 				D1E17B6D2CAAE02C00F228A9 /* Models */,
 				D1E17B6C2CAAE02400F228A9 /* Modules */,
-				D1E17B332CAADEC700F228A9 /* AppDelegate.swift */,
-				D1E17B352CAADEC700F228A9 /* SceneDelegate.swift */,
-				D1E17B372CAADEC700F228A9 /* ViewController.swift */,
 				D1E17B392CAADEC700F228A9 /* Main.storyboard */,
 				D1E17B3F2CAADECA00F228A9 /* Assets.xcassets */,
 				D1E17B412CAADECA00F228A9 /* LaunchScreen.storyboard */,
@@ -175,6 +178,9 @@
 		D1E17B692CAADFE900F228A9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D1E17B332CAADEC700F228A9 /* AppDelegate.swift */,
+				D1E17B352CAADEC700F228A9 /* SceneDelegate.swift */,
+				D1E17B372CAADEC700F228A9 /* ViewController.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -199,6 +205,9 @@
 		D1E17B6E2CAAE11100F228A9 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				D1E17B7B2CAAE34200F228A9 /* LoginViewController.swift */,
+				D1E17B7D2CAAE34D00F228A9 /* LoginViewModel.swift */,
+				D1E17B7F2CAAE35600F228A9 /* LoginStoryboard.storyboard */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -324,6 +333,7 @@
 				D1E17B432CAADECA00F228A9 /* LaunchScreen.storyboard in Resources */,
 				D1E17B402CAADECA00F228A9 /* Assets.xcassets in Resources */,
 				D1E17B3B2CAADEC700F228A9 /* Main.storyboard in Resources */,
+				D1E17B802CAAE35600F228A9 /* LoginStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,12 +360,14 @@
 			files = (
 				D1E17B7A2CAAE2D900F228A9 /* UIViewController+Extension.swift in Sources */,
 				D1E17B782CAAE23400F228A9 /* String+Extension.swift in Sources */,
+				D1E17B7E2CAAE34D00F228A9 /* LoginViewModel.swift in Sources */,
 				D1E17B382CAADEC700F228A9 /* ViewController.swift in Sources */,
 				D1E17B762CAAE20A00F228A9 /* UIView+Extension.swift in Sources */,
 				D1E17B342CAADEC700F228A9 /* AppDelegate.swift in Sources */,
 				D1E17B362CAADEC700F228A9 /* SceneDelegate.swift in Sources */,
 				D1E17B3E2CAADEC700F228A9 /* FriendsList.xcdatamodeld in Sources */,
 				D1E17B742CAAE1D800F228A9 /* ProgressIndicatorPresentable.swift in Sources */,
+				D1E17B7C2CAAE34200F228A9 /* LoginViewController.swift in Sources */,
 				D1E17B722CAAE1A200F228A9 /* AlertPresentable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
