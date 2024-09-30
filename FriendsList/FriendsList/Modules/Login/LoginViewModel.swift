@@ -20,8 +20,8 @@ extension LoginViewModel: LoginViewModelInterface {
     func viewDidLoad() {}
 
     func loginButtonTapped() {
-        guard let userName = view?.userName, let password = view?.password else {
-            view?.showError(title: "Error", message: "check", buttonTitle: "OK", completion: {})
+        guard let userName = view?.userName, !userName.isEmpty, let password = view?.password, !password.isEmpty else {
+            view?.showError(title: "Alert", message: "Username or Password is nil", buttonTitle: "OK", completion: {})
             return
         }
         view?.pushVC()
