@@ -23,6 +23,8 @@
 		D1E17B7C2CAAE34200F228A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B7B2CAAE34200F228A9 /* LoginViewController.swift */; };
 		D1E17B7E2CAAE34D00F228A9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B7D2CAAE34D00F228A9 /* LoginViewModel.swift */; };
 		D1E17B802CAAE35600F228A9 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1E17B7F2CAAE35600F228A9 /* LoginStoryboard.storyboard */; };
+		D1E17B822CAAF05800F228A9 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B812CAAF05800F228A9 /* NetworkManager.swift */; };
+		D1E17B842CAAF07500F228A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B832CAAF07500F228A9 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		D1E17B7B2CAAE34200F228A9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D1E17B7D2CAAE34D00F228A9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D1E17B7F2CAAE35600F228A9 /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
+		D1E17B812CAAF05800F228A9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		D1E17B832CAAF07500F228A9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,7 @@
 		D1E17B682CAADF4200F228A9 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				D1E17B812CAAF05800F228A9 /* NetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -175,6 +180,7 @@
 			children = (
 				D1E17B332CAADEC700F228A9 /* AppDelegate.swift */,
 				D1E17B352CAADEC700F228A9 /* SceneDelegate.swift */,
+				D1E17B832CAAF07500F228A9 /* Constants.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -355,12 +361,14 @@
 				D1E17B782CAAE23400F228A9 /* String+Extension.swift in Sources */,
 				D1E17B7E2CAAE34D00F228A9 /* LoginViewModel.swift in Sources */,
 				D1E17B762CAAE20A00F228A9 /* UIView+Extension.swift in Sources */,
+				D1E17B822CAAF05800F228A9 /* NetworkManager.swift in Sources */,
 				D1E17B342CAADEC700F228A9 /* AppDelegate.swift in Sources */,
 				D1E17B362CAADEC700F228A9 /* SceneDelegate.swift in Sources */,
 				D1E17B3E2CAADEC700F228A9 /* FriendsList.xcdatamodeld in Sources */,
 				D1E17B742CAAE1D800F228A9 /* ProgressIndicatorPresentable.swift in Sources */,
 				D1E17B7C2CAAE34200F228A9 /* LoginViewController.swift in Sources */,
 				D1E17B722CAAE1A200F228A9 /* AlertPresentable.swift in Sources */,
+				D1E17B842CAAF07500F228A9 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
