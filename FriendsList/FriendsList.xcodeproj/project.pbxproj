@@ -19,6 +19,7 @@
 		D1E17B5A2CAADECA00F228A9 /* FriendsListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B592CAADECA00F228A9 /* FriendsListUITestsLaunchTests.swift */; };
 		D1E17B722CAAE1A200F228A9 /* AlertPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B712CAAE1A200F228A9 /* AlertPresentable.swift */; };
 		D1E17B742CAAE1D800F228A9 /* ProgressIndicatorPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B732CAAE1D800F228A9 /* ProgressIndicatorPresentable.swift */; };
+		D1E17B762CAAE20A00F228A9 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B752CAAE20A00F228A9 /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		D1E17B592CAADECA00F228A9 /* FriendsListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		D1E17B712CAAE1A200F228A9 /* AlertPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentable.swift; sourceTree = "<group>"; };
 		D1E17B732CAAE1D800F228A9 /* ProgressIndicatorPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorPresentable.swift; sourceTree = "<group>"; };
+		D1E17B752CAAE20A00F228A9 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 		D1E17B672CAADF3A00F228A9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D1E17B752CAAE20A00F228A9 /* UIView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1E17B382CAADEC700F228A9 /* ViewController.swift in Sources */,
+				D1E17B762CAAE20A00F228A9 /* UIView+Extension.swift in Sources */,
 				D1E17B342CAADEC700F228A9 /* AppDelegate.swift in Sources */,
 				D1E17B362CAADEC700F228A9 /* SceneDelegate.swift in Sources */,
 				D1E17B3E2CAADEC700F228A9 /* FriendsList.xcdatamodeld in Sources */,
