@@ -50,6 +50,8 @@
 		D1E17BAD2CAB1F9900F228A9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17BAC2CAB1F9900F228A9 /* DetailViewController.swift */; };
 		D1E17BAF2CAB1FA300F228A9 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17BAE2CAB1FA300F228A9 /* DetailViewModel.swift */; };
 		D1E17BB12CAB1FAD00F228A9 /* DetailStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1E17BB02CAB1FAD00F228A9 /* DetailStoryboard.storyboard */; };
+		D1E17BB62CAB4F1100F228A9 /* CachedUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17BB52CAB4F1100F228A9 /* CachedUser.swift */; };
+		D1E17BB82CAB506200F228A9 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17BB72CAB506200F228A9 /* RealmManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +125,8 @@
 		D1E17BAC2CAB1F9900F228A9 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D1E17BAE2CAB1FA300F228A9 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		D1E17BB02CAB1FAD00F228A9 /* DetailStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailStoryboard.storyboard; sourceTree = "<group>"; };
+		D1E17BB52CAB4F1100F228A9 /* CachedUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedUser.swift; sourceTree = "<group>"; };
+		D1E17BB72CAB506200F228A9 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +261,7 @@
 			children = (
 				D1E17B812CAAF05800F228A9 /* NetworkManager.swift */,
 				D1E17B9D2CAAF30800F228A9 /* RandomUserManager.swift */,
+				D1E17BB72CAB506200F228A9 /* RealmManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -333,6 +338,7 @@
 		D1E17BB32CAB4E7800F228A9 /* RealmModels */ = {
 			isa = PBXGroup;
 			children = (
+				D1E17BB52CAB4F1100F228A9 /* CachedUser.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -600,6 +606,8 @@
 			files = (
 				D1E17B7A2CAAE2D900F228A9 /* UIViewController+Extension.swift in Sources */,
 				D1E17B8E2CAAF1D900F228A9 /* Login.swift in Sources */,
+				D1E17BB82CAB506200F228A9 /* RealmManager.swift in Sources */,
+				D1E17BB62CAB4F1100F228A9 /* CachedUser.swift in Sources */,
 				D1E17B782CAAE23400F228A9 /* String+Extension.swift in Sources */,
 				D1E17B9A2CAAF25000F228A9 /* Dob.swift in Sources */,
 				D1E17B7E2CAAE34D00F228A9 /* LoginViewModel.swift in Sources */,
