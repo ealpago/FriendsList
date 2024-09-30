@@ -34,11 +34,13 @@ extension ListingViewController: UITableViewDelegate {
 extension ListingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier) as? UserTableViewCell else { return UITableViewCell() }
-        viewModel.cellForRow(at: indexPath.row)
+        cell.configure(argument: viewModel.cellForRow(at: indexPath.row))
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectRow(at: indexPath.row)
+    }
 }
 
 extension ListingViewController: ListingViewInterface {
@@ -47,14 +49,14 @@ extension ListingViewController: ListingViewInterface {
         usersTableView.dataSource = self
         usersTableView.register(UserTableViewCell.nib, forCellReuseIdentifier: UserTableViewCell.identifier)
     }
-    
+
     func reloadData() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             usersTableView.reloadData()
         }
     }
-    
+
     func popToRoot() {
         navigationController?.popViewController(animated: true)
     }

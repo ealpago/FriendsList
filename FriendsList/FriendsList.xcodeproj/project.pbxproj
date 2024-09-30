@@ -43,6 +43,7 @@
 		D1E17BA42CAAFB5B00F228A9 /* ListingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1E17BA32CAAFB5B00F228A9 /* ListingStoryboard.storyboard */; };
 		D1E17BA82CAAFBE100F228A9 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17BA62CAAFBE100F228A9 /* UserTableViewCell.swift */; };
 		D1E17BA92CAAFBE100F228A9 /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1E17BA72CAAFBE100F228A9 /* UserTableViewCell.xib */; };
+		D1E17BAB2CAB1EA700F228A9 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17BAA2CAB1EA700F228A9 /* UIImageView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		D1E17BA32CAAFB5B00F228A9 /* ListingStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ListingStoryboard.storyboard; sourceTree = "<group>"; };
 		D1E17BA62CAAFBE100F228A9 /* UserTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		D1E17BA72CAAFBE100F228A9 /* UserTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
+		D1E17BAA2CAB1EA700F228A9 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				D1E17B752CAAE20A00F228A9 /* UIView+Extension.swift */,
 				D1E17B772CAAE23400F228A9 /* String+Extension.swift */,
 				D1E17B792CAAE2D900F228A9 /* UIViewController+Extension.swift */,
+				D1E17BAA2CAB1EA700F228A9 /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				D1E17B8C2CAAF1C500F228A9 /* Name.swift in Sources */,
 				D1E17B8A2CAAF1B700F228A9 /* Picture.swift in Sources */,
 				D1E17B982CAAF24200F228A9 /* Id.swift in Sources */,
+				D1E17BAB2CAB1EA700F228A9 /* UIImageView+Extension.swift in Sources */,
 				D1E17BA22CAAFB4D00F228A9 /* ListingViewModel.swift in Sources */,
 				D1E17B342CAADEC700F228A9 /* AppDelegate.swift in Sources */,
 				D1E17BA82CAAFBE100F228A9 /* UserTableViewCell.swift in Sources */,
