@@ -46,5 +46,8 @@ extension LoginViewController: LoginViewInterface {
         passwordTextField.text ?? ""
     }
 
-    func pushVC() {}
+    func pushVC() {
+        guard let vc = "ListingStoryboard".viewController(identifier: ListingViewController.identifier) as? ListingViewController else { return }
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
