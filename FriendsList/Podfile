@@ -6,7 +6,7 @@ target 'FriendsList' do
   use_frameworks!
 
   # Pods for FriendsList
-  pod 'RealmSwift', '~>10'
+  pod 'RealmSwift', '~>10.53.0'
 
 
   target 'FriendsListTests' do

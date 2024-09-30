@@ -120,7 +120,6 @@ extension RealmCollectionImpl {
         return collection.addNotificationBlock(wrapped, keyPaths: keyPaths, queue: queue)
     }
 
-#if compiler(<6)
     @available(macOS 10.15, tvOS 13.0, iOS 13.0, watchOS 6.0, *)
     @_unsafeInheritExecutor
     public func observe<A: Actor>(
@@ -131,22 +130,8 @@ extension RealmCollectionImpl {
             collection.observe(keyPaths: keyPaths, on: nil) { change in
                 actor.invokeIsolated(block, change)
             }
-        }
+        } ?? NotificationToken()
     }
-#else
-    @available(macOS 10.15, tvOS 13.0, iOS 13.0, watchOS 6.0, *)
-    public func observe<A: Actor>(
-        keyPaths: [String]?, on actor: A,
-        _isolation: isolated (any Actor)? = #isolation,
-        _ block: @Sendable @escaping (isolated A, RealmCollectionChange<Self>) -> Void
-    ) async -> NotificationToken {
-        await with(self, on: actor) { actor, collection in
-            collection.observe(keyPaths: keyPaths, on: nil) { change in
-                actor.invokeIsolated(block, change)
-            }
-        }
-    }
-#endif
 
     public var isFrozen: Bool {
         return collection.isFrozen
@@ -183,15 +168,30 @@ extension Optional: OptionalProtocol {
 
 // `with(object, on: actor) { object, actor in ... }` hands the object over
 // to the given actor and then invokes the callback within the actor.
-#if compiler(<6)
+// This might make sense to expose publicly.
 @available(macOS 10.15, tvOS 13.0, iOS 13.0, watchOS 6.0, *)
 @_unsafeInheritExecutor
-internal func with<A: Actor, Value: ThreadConfined>(
-    _ value: Value, on actor: A,
-    _ block: @Sendable @escaping (isolated A, Value) async throws -> NotificationToken
-) async rethrows -> NotificationToken {
+internal func with<A: Actor, Value: ThreadConfined, Return: Sendable>(
+    _ value: Value,
+    on actor: A,
+    _ block: @Sendable @escaping (isolated A, Value) async throws -> Return
+) async rethrows -> Return? {
     if value.realm == nil {
-        fatalError("Change notifications are only supported for managed objects")
+        let unchecked = Unchecked(wrappedValue: value)
+        return try await actor.invoke { actor in
+            if !Task.isCancelled {
+#if swift(>=5.10) && compiler(<6)
+                // As of Swift 5.10 the compiler incorrectly thinks that this
+                // is an async hop even though the isolation context is
+                // unchanged. This is fixed in 5.11.
+                nonisolated(unsafe) let value = unchecked.wrappedValue
+                return try await block(actor, value)
+#else
+                return try await block(actor, unchecked.wrappedValue)
+#endif
+            }
+            return nil
+        }
     }
 
     let tsr = ThreadSafeReference(to: value)
@@ -205,37 +205,14 @@ internal func with<A: Actor, Value: ThreadConfined>(
         guard let value = tsr.resolve(in: realm) else {
             return nil
         }
-        // This is safe but 5.10's sendability checking can't prove it
+#if swift(>=5.10) && compiler(<6)
+        // As above; this is safe but 5.10's sendability checking can't prove it
         // nonisolated(unsafe) can't be applied to a let in guard so we need
         // a second variable
         nonisolated(unsafe) let v = value
         return try await block(actor, v)
-    } ?? NotificationToken()
-}
 #else
-@available(macOS 10.15, tvOS 13.0, iOS 13.0, watchOS 6.0, *)
-internal func with<A: Actor, Value: ThreadConfined>(
-    _ value: Value,
-    on actor: A,
-    _isolation: isolated (any Actor)? = #isolation,
-    _ block: @Sendable @escaping (isolated A, Value) async throws -> NotificationToken?
-) async rethrows -> NotificationToken {
-    if value.realm == nil {
-        fatalError("Change notifications are only supported for managed objects")
-    }
-
-    let tsr = ThreadSafeReference(to: value)
-    nonisolated(unsafe) let config = value.realm!.rlmRealm.configurationSharingSchema()
-    return try await actor.invoke { actor in
-        if Task.isCancelled {
-            return nil
-        }
-        let scheduler = RLMScheduler.actor(actor, invoke: actor.invoke, verify: actor.verifier())
-        let realm = Realm(try! RLMRealm(configuration: config, confinedTo: scheduler))
-        guard let value = tsr.resolve(in: realm) else {
-            return nil
-        }
         return try await block(actor, value)
-    } ?? NotificationToken()
-}
 #endif
+    }
+}

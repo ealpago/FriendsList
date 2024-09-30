@@ -26,13 +26,17 @@ if [ -n "${CI}" ]; then
     CODESIGN_PARAMS=(CODE_SIGN_IDENTITY='' CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO)
 fi
 
-if [ -n "${GITHUB_WORKSPACE}" ]; then
-    DERIVED_DATA="$GITHUB_WORKSPACE/build/DerivedData"
+if [ -n "${CI_XCODE_CLOUD}" ]; then
+    DERIVED_DATA="$CI_DERIVED_DATA_PATH"
+    ROOT_WORKSPACE="$CI_WORKSPACE"
+    BRANCH="$CI_BRANCH"
+elif [ -n "${GITHUB_WORKSPACE}" ]; then
+    DERIVED_DATA="$GITHUB_WORKSPACE/build/DerivedData/Realm"
     ROOT_WORKSPACE="$GITHUB_WORKSPACE"
-    BRANCH="${GITHUB_HEAD_REF:-${GITHUB_REF}}"
+    BRANCH="$GITHUB_REF"
 else
     ROOT_WORKSPACE="$(pwd)"
-    DERIVED_DATA="$ROOT_WORKSPACE/build/DerivedData"
+    DERIVED_DATA="$ROOT_WORKSPACE/build/DerivedData/Realm"
     BRANCH="$(git branch --show-current)"
 fi
 
@@ -65,7 +69,7 @@ command:
   test-swiftpm:         tests ObjC and Swift macOS frameworks via SwiftPM
   test-ios-swiftui:        tests SwiftUI framework UI tests
   test-swiftuiserver-osx:  tests Server Sync in SwiftUI
-  verify:               verifies docs, cocoapods, swiftpm, xcframework, swiftuiserver-osx, swiftlint, spm-ios, sync, watchos in both Debug and Release configurations
+  verify:               verifies docs, cocoapods, swiftpm, xcframework, swiftuiserver-osx, swiftlint, spm-ios, objectserver-osx, watchos in both Debug and Release configurations
 
   docs:                 builds docs in docs/output
   examples:             builds all examples
@@ -179,7 +183,7 @@ build_combined() {
     build_args=(-scheme "$product" -configuration "$config" build REALM_HIDE_SYMBOLS=YES)
 
     # Derive build paths
-    local build_products_path="$DERIVED_DATA/Realm/Build/Products"
+    local build_products_path="$DERIVED_DATA/Build/Products"
     local product_name="$product.framework"
     local os_path="$build_products_path/$config${config_suffix}/$product_name"
     local simulator_path="$build_products_path/$config-$simulator_suffix/$product_name"
@@ -253,7 +257,7 @@ build_platform() {
             ;;
     esac
 
-    build_products_path="$DERIVED_DATA/Realm/Build/Products"
+    build_products_path="$DERIVED_DATA/Build/Products"
     build_path="$build_products_path/$config${config_suffix}"
 
     build_args=(-scheme "$product" -configuration "$config" build REALM_HIDE_SYMBOLS=YES)
@@ -529,11 +533,11 @@ case "$COMMAND" in
         done
 
         # Assemble them into xcframeworks
-        rm -rf "$DERIVED_DATA/Realm/Build/Products"*.xcframework
-        find "$DERIVED_DATA/Realm/Build/Products" -name 'Realm.framework' \
+        rm -rf "$DERIVED_DATA/Build/Products"*.xcframework
+        find "$DERIVED_DATA/Build/Products" -name 'Realm.framework' \
             | sed 's/.*/-framework &/' \
             | xargs xcodebuild -create-xcframework -allow-internal-distribution -output "build/$CONFIGURATION/Realm.xcframework"
-        find "$DERIVED_DATA/Realm/Build/Products" -name 'RealmSwift.framework' \
+        find "$DERIVED_DATA/Build/Products" -name 'RealmSwift.framework' \
             | sed 's/.*/-framework &/' \
             | xargs xcodebuild -create-xcframework -allow-internal-distribution -output "build/$CONFIGURATION/RealmSwift.xcframework"
 
@@ -644,7 +648,7 @@ case "$COMMAND" in
         exit 0
         ;;
 
-    "test-sync")
+    "test-objectserver-osx")
         xctest 'Object Server Tests' -configuration "$CONFIGURATION" -sdk macosx -destination "platform=macOS,arch=$(uname -m)"
         exit 0
         ;;
@@ -665,7 +669,7 @@ case "$COMMAND" in
         ;;
 
     "test-ios-swiftui")
-        xctest 'SwiftUITestHost' -configuration "$CONFIGURATION" -sdk iphonesimulator -destination 'name=iPhone 14'
+        xctest 'SwiftUITestHost' -configuration "$CONFIGURATION" -sdk iphonesimulator -destination 'name=iPhone 11'
         exit 0
         ;;
 
@@ -676,16 +680,6 @@ case "$COMMAND" in
 
     "test-catalyst-swift")
         xctest RealmSwift -configuration "$CONFIGURATION" -destination 'platform=macOS,variant=Mac Catalyst' CODE_SIGN_IDENTITY=''
-        exit 0
-        ;;
-
-    "test-visionos")
-        xctest Realm -configuration "$CONFIGURATION" -sdk xrsimulator -destination 'platform=visionOS Simulator,name=Apple Vision Pro' CODE_SIGN_IDENTITY=''
-        exit 0
-        ;;
-
-    "test-visionos-swift")
-        xctest RealmSwift -configuration "$CONFIGURATION" -sdk xrsimulator -destination 'platform=visionOS Simulator,name=Apple Vision Pro' CODE_SIGN_IDENTITY=''
         exit 0
         ;;
 
@@ -701,7 +695,7 @@ case "$COMMAND" in
         sh build.sh verify-cocoapods
         sh build.sh verify-docs
         sh build.sh verify-spm-ios
-        sh build.sh verify-sync
+        sh build.sh verify-objectserver-osx
         sh build.sh verify-swiftlint
         sh build.sh verify-swiftpm
         sh build.sh verify-watchos
@@ -729,15 +723,15 @@ case "$COMMAND" in
         ;;
 
     "verify-cocoapods")
-        export REALM_TEST_BRANCH="$BRANCH"
+        export REALM_TEST_BRANCH="$sha"
         if [[ -d .git ]]; then
             # Verify the current branch, unless one was already specified in the sha environment variable.
-            if [[ -z $BRANCH ]]; then
+            if [[ -z $sha ]]; then
                 export REALM_TEST_BRANCH=$(git rev-parse --abbrev-ref HEAD)
             fi
 
             if [[ $(git log -1 '@{push}..') != "" ]] || ! git diff-index --quiet HEAD; then
-                echo "WARNING: verify-cocoapods will test the latest revision of $BRANCH found on GitHub."
+                echo "WARNING: verify-cocoapods will test the latest revision of $sha found on GitHub."
                 echo "         Any unpushed local changes will not be tested."
                 echo ""
                 sleep 1
@@ -757,7 +751,7 @@ case "$COMMAND" in
         PLATFORM=$(echo "$COMMAND" | cut -d - -f 3)
         cd examples/installation
 
-        REALM_TEST_BRANCH="$BRANCH" ./build.rb "$PLATFORM" cocoapods "$LINKAGE"
+        REALM_TEST_BRANCH="$sha" ./build.rb "$PLATFORM" cocoapods "$LINKAGE"
         ;;
 
     "verify-docs")
@@ -774,15 +768,15 @@ case "$COMMAND" in
         ;;
 
     "verify-spm")
-        export REALM_TEST_BRANCH="$BRANCH"
+        export REALM_TEST_BRANCH="$sha"
         if [[ -d .git ]]; then
             # Verify the current branch, unless one was already specified in the sha environment variable.
-            if [[ -z $BRANCH ]]; then
+            if [[ -z $sha ]]; then
                 export REALM_TEST_BRANCH=$(git rev-parse --abbrev-ref HEAD)
             fi
 
             if [[ $(git log -1 '@{push}..') != "" ]] || ! git diff-index --quiet HEAD; then
-                echo "WARNING: verify-spm will test the latest revision of $BRANCH found on GitHub."
+                echo "WARNING: verify-spm will test the latest revision of $sha found on GitHub."
                 echo "         Any unpushed local changes will not be tested."
                 echo ""
                 sleep 1
@@ -803,7 +797,12 @@ case "$COMMAND" in
         PLATFORM=$(echo "$COMMAND" | cut -d - -f 3)
         cd examples/installation
 
-        REALM_TEST_BRANCH="$BRANCH" ./build.rb "$PLATFORM" spm "$LINKAGE"
+        REALM_TEST_BRANCH="$sha" ./build.rb "$PLATFORM" spm "$LINKAGE"
+        exit 0
+        ;;
+
+    "verify-objectserver-osx")
+        REALM_TEST_BRANCH="$sha" sh build.sh test-objectserver-osx
         exit 0
         ;;
 
@@ -838,7 +837,9 @@ case "$COMMAND" in
         sh build.sh examples-osx
 
         (
-            cd examples/osx/objc/build/DerivedData/RealmExamples/Build/Products/Release
+            DERIVED_EXAMPLE_DATA=${DERIVED_DATA:-examples/osx/objc/build/DerivedData/RealmExamples}
+
+            cd $DERIVED_EXAMPLE_DATA/Build/Products/$CONFIGURATION
             DYLD_FRAMEWORK_PATH=. ./JSONImport >/dev/null
         )
         exit 0
@@ -1358,7 +1359,7 @@ x.y.z Release notes (yyyy-MM-dd)
 * APIs are backwards compatible with all previous releases in the 10.x.y series.
 * Carthage release for Swift is built with Xcode 15.4.0.
 * CocoaPods: 1.10 or later.
-* Xcode: 15.3.0-16.1 beta.
+* Xcode: 15.1.0-16 beta 5.
 
 ### Internal
 * Upgraded realm-core from ? to ?
