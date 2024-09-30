@@ -10,7 +10,6 @@ import RealmSwift
 
 //MARK: Protocol
 protocol ListingViewInterface: AnyObject, AlertPresentable, ProgressIndicatorPresentable {
-    func popToRoot()
     func prepareTableView()
     func reloadData()
     func pushVC(argument: DetailViewArguments?)
@@ -73,9 +72,5 @@ extension ListingViewController: ListingViewInterface {
             vc.arguments = argument
             self.navigationController?.pushViewController(vc, animated: true)
         }
-    }
-
-    func popToRoot() {
-        navigationController?.popViewController(animated: true)
     }
 }
