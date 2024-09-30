@@ -11,7 +11,7 @@ protocol ListingViewModelInterface {
     var numberOfRowsInSection: Int { get }
 
     func viewDidLoad()
-    func cellForRow(at index: Int) -> ListingViewArguments
+    func cellForRow(at index: Int) -> ListingViewCellArguments
     func didSelectRow(at index: Int)
 }
 
@@ -51,10 +51,10 @@ extension ListingViewModel: ListingViewModelInterface{
         users.count
     }
 
-    func cellForRow(at index: Int) -> ListingViewArguments {
-        guard let name = users[index].name?.first, let surname = users[index].name?.last, let nationality = users[index].nat, let picture = users[index].picture?.thumbnail else { return ListingViewArguments() }
+    func cellForRow(at index: Int) -> ListingViewCellArguments {
+        guard let name = users[index].name?.first, let surname = users[index].name?.last, let nationality = users[index].nat, let picture = users[index].picture?.thumbnail else { return ListingViewCellArguments() }
         let fullName = "\(name) \(surname)"
-        return ListingViewArguments(picture: picture, name: fullName, nationality: nationality)
+        return ListingViewCellArguments(picture: picture, name: fullName, nationality: nationality)
     }
 
     func didSelectRow(at index: Int) {}

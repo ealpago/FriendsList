@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct ListingViewArguments {
+struct ListingViewCellArguments {
     var picture: String?
     var name: String?
     var nationality: String?
@@ -30,7 +30,7 @@ class UserTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func configure(argument: ListingViewArguments) {
+    func configure(argument: ListingViewCellArguments) {
         nameLabel.text = argument.name
         nationalityLabel.text = argument.nationality
         guard let url = argument.picture else { return }
