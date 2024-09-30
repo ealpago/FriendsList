@@ -22,7 +22,8 @@ extension LoginViewModel: LoginViewModelInterface {
     func loginButtonTapped() {
         guard let userName = view?.userName, let password = view?.password else {
             view?.showError(title: "Error", message: "check", buttonTitle: "OK", completion: {})
+            return
         }
-        view.pushVC()
+        view?.pushVC()
     }
 }
