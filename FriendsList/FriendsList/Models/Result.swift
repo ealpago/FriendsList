@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Result: Codable {
+struct ResponseResult: Codable {
 
     let cell: String?
     let dob: Dob?

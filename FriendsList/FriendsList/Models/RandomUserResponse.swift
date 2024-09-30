@@ -10,7 +10,7 @@ import Foundation
 struct RandomUserResponse: Codable {
 
     let info: Info?
-    let results: [Result]?
+    let results: [ResponseResult]?
 
     enum CodingKeys: String, CodingKey {
         case info
