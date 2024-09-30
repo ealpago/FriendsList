@@ -62,6 +62,7 @@ final class ListingViewModel {
 //MARK: Extension
 extension ListingViewModel: ListingViewModelInterface{
     func viewDidLoad() {
+        view?.hideNavBar()
         view?.prepareTableView()
         fetchData() { isOnline in
             self.isOnline = isOnline

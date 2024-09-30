@@ -10,6 +10,7 @@ import RealmSwift
 
 //MARK: Protocol
 protocol ListingViewInterface: AnyObject, AlertPresentable, ProgressIndicatorPresentable {
+    func hideNavBar()
     func prepareTableView()
     func reloadData()
     func pushVC(argument: DetailViewArguments?)
@@ -54,6 +55,10 @@ extension ListingViewController: UITableViewDataSource {
 
 //MARK: Extension
 extension ListingViewController: ListingViewInterface {
+    func hideNavBar() {
+        navigationItem.setHidesBackButton(true, animated: true)
+    }
+    
     func prepareTableView() {
         usersTableView.delegate = self
         usersTableView.dataSource = self
