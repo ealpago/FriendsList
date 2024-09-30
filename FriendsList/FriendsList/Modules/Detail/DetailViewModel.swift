@@ -17,6 +17,8 @@ final class DetailViewModel {
 
 extension DetailViewModel: DetailViewModelInterface {
     func viewDidLoad() {
-        <#code#>
+        view?.prepareUIConstraints()
+        view?.prepareUIData()
+        view?.prepareMapKit()
     }
 }
