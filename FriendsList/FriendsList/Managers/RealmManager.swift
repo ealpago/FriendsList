@@ -57,5 +57,24 @@ class RealmManager {
             print("Error fetching users from Realm: \(error)")
             return []
         }
-    }}
+    }
+
+    func removeRealmCache() {
+        let realmURL = Realm.Configuration.defaultConfiguration.fileURL!
+        let realmURLs = [
+            realmURL,
+            realmURL.appendingPathExtension("lock"),
+            realmURL.appendingPathExtension("note"),
+            realmURL.appendingPathExtension("management")
+        ]
+        for url in realmURLs {
+            do {
+                try FileManager.default.removeItem(at: url)
+                print("Successfully removed: \(url)")
+            } catch {
+                print("Error removing Realm cache: \(error)")
+            }
+        }
+    }
+}
 
