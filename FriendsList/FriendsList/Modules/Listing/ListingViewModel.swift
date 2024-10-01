@@ -26,15 +26,17 @@ final class ListingViewModel {
     private var users = [ResponseResult]()
     private var realmUsers = [CachedUser]()
     private var isOnline: Bool = true
+    private let randomUserManager: RandomUserManagerInterface
 
-    init(view: ListingViewInterface) {
+    init(view: ListingViewInterface, randomUserManager: RandomUserManagerInterface = RandomUserManager.shared) {
         self.view = view
+        self.randomUserManager = randomUserManager
     }
 
     //MARK: Functions
     func fetchData(completion: @escaping(Bool)->()) {
         view?.showLoadingIndicator()
-        RandomUserManager.shared.fetchRandomUser { [weak self] result in
+        randomUserManager.fetchRandomUser { [weak self] result in
             self?.view?.hideLoadingIndicator()
             switch result {
             case .success(let response):
