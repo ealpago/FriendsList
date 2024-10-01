@@ -16,5 +16,10 @@ final class MockRandomUserManager: RandomUserManagerInterface {
     func fetchRandomUser(completion: @escaping (Result<FriendsList.RandomUserResponse, FriendsList.NetworkError>) -> ()) {
         invokeFetchRandomUser = true
         invokeFetchRandomUserCount += 1
+        if let result = result {
+            completion(.success(result))
+        } else {
+            completion(.failure(.requestFailed))
+        }
     }
 }
