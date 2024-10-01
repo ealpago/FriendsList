@@ -7,7 +7,13 @@
 
 import Foundation
 
-class RandomUserManager {
+protocol RandomUserManagerInterface {
+    var result: RandomUserResponse? { get }
+
+    func fetchRandomUser(completion: @escaping (Result<RandomUserResponse, NetworkError>) -> ())
+}
+
+final class RandomUserManager: RandomUserManagerInterface {
     static let shared = RandomUserManager()
     var result: RandomUserResponse?
 
