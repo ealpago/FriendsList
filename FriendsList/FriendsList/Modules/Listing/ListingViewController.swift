@@ -8,11 +8,17 @@
 import UIKit
 
 //MARK: Protocol
-protocol ListingViewInterface: AnyObject, AlertPresentable, ProgressIndicatorPresentable {
+protocol ListingViewInterface: AlertPresentable, ProgressIndicatorPresentable {
     func hideNavBar()
     func prepareTableView()
     func reloadData()
-    func pushVC(argument: DetailViewArguments?)
+    func pushVC(argument: DetailViewArguments)
+}
+
+extension ListingViewController {
+    enum Constant {
+        static let detailStoryboardDileName = "DetailStoryboard"
+    }
 }
 
 //MARK: ViewControler
@@ -32,7 +38,7 @@ final class ListingViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.viewWillApperar()
+        viewModel.viewWillAppear()
     }
 }
 
@@ -70,14 +76,13 @@ extension ListingViewController: ListingViewInterface {
 
     func reloadData() {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            usersTableView.reloadData()
+            self?.usersTableView.reloadData()
         }
     }
 
-    func pushVC(argument: DetailViewArguments?) {
-        if let vc = "DetailStoryboard".viewController(identifier: DetailViewController.identifier) as? DetailViewController {
-            vc.arguments = argument
+    func pushVC(argument: DetailViewArguments) {
+        if let vc = Constant.detailStoryboardDileName.viewController(identifier: DetailViewController.identifier) as? DetailViewController {
+            vc.viewModel = DetailViewModel(view: vc, arguments: argument)
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

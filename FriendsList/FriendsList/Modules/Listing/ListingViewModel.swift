@@ -10,12 +10,18 @@ import Foundation
 //MARK: Protocol
 protocol ListingViewModelInterface {
     var numberOfRowsInSection: Int { get }
-    var isAppOnline: Bool? { get set }
 
     func viewDidLoad()
-    func viewWillApperar()
+    func viewWillAppear()
     func cellForRow(at index: Int) -> ListingViewCellArguments
     func didSelectRow(at index: Int)
+}
+
+extension ListingViewModel {
+    enum Constant {
+        static let errorTitle = "Error"
+        static let buttonTitle = "OK"
+    }
 }
 
 //MARK: ViewModel
@@ -25,16 +31,19 @@ final class ListingViewModel {
     private weak var view: ListingViewInterface?
     private var users = [ResponseResult]()
     private var realmUsers = [CachedUser]()
-    private var isOnline: Bool? = nil
+    private var isOnline: Bool = false
     private let randomUserManager: RandomUserManagerInterface
+    private let realmManager: RealmManagerInterface
 
-    init(view: ListingViewInterface, randomUserManager: RandomUserManagerInterface = RandomUserManager.shared) {
+
+    init(view: ListingViewInterface, randomUserManager: RandomUserManagerInterface = RandomUserManager(), realmManager: RealmManagerInterface = RealmManager.shared) {
         self.view = view
         self.randomUserManager = randomUserManager
+        self.realmManager = realmManager
     }
 
     //MARK: Functions
-    func fetchData(completion: @escaping(Bool)->()) {
+    private func fetchData() {
         view?.showLoadingIndicator()
         randomUserManager.fetchRandomUser { [weak self] result in
             self?.view?.hideLoadingIndicator()
@@ -42,74 +51,65 @@ final class ListingViewModel {
             case .success(let response):
                 guard let userList = response.results else { return }
                 self?.users = userList
+                self?.realmManager.removeRealmCache()
                 self?.saveDataToRealm(users: userList)
-                completion(true)
+                self?.isOnline = true
+                self?.view?.reloadData()
             case .failure(let error):
-                DispatchQueue.main.async {
-                    let cachedUsers = RealmManager.shared.fetchUsersFromRealm()
-                    if !cachedUsers.isEmpty {
-                        self?.realmUsers = cachedUsers
-                        completion(false)
-                    } else {
-                        self?.view?.showError(title: "Error", message: error.localizedDescription, buttonTitle: "OK", completion: {})
-                    }
+                let cachedUsers = RealmManager.shared.fetchUsersFromRealm()
+                if !cachedUsers.isEmpty {
+                    self?.realmUsers = cachedUsers
+                    self?.isOnline = false
+                    self?.view?.reloadData()
+                } else {
+                    self?.view?.showError(title: Constant.errorTitle, message: error.localizedDescription, buttonTitle: Constant.buttonTitle, completion: {})
                 }
             }
         }
     }
 
-    func saveDataToRealm(users: [ResponseResult]) {
+    private func saveDataToRealm(users: [ResponseResult]) {
         DispatchQueue.main.async {
             users.forEach { user in
-                RealmManager.shared.saveUserToRealm(user: user)
+                self.realmManager.saveUserToRealm(user: user)
             }
         }
     }
 }
 
 //MARK: Extension
-extension ListingViewModel: ListingViewModelInterface{
-    var isAppOnline: Bool? {
-        get {
-            return isOnline ?? nil
-        }
-        set {
-            isOnline = newValue
-        }
-    }
-
+extension ListingViewModel: ListingViewModelInterface {
     func viewDidLoad() {
-        view?.hideNavBar()
         view?.prepareTableView()
+        fetchData()
     }
 
-    func viewWillApperar() {
-        fetchData() { isOnline in
-            self.isOnline = isOnline
-            self.view?.reloadData()
-        }
+    func viewWillAppear() {
+        view?.hideNavBar()
     }
 
     var numberOfRowsInSection: Int {
-        guard let isAppOnline = isAppOnline else { return 0 }
-        return isAppOnline ? users.count : realmUsers.count
+        return isOnline ? users.count : realmUsers.count
     }
 
     func cellForRow(at index: Int) -> ListingViewCellArguments {
-        guard let isAppOnline = isAppOnline else { return ListingViewCellArguments() }
-        guard let name = isAppOnline ? users[index].name?.first : realmUsers[index].name, let surname = isAppOnline ? users[index].name?.last : realmUsers[index].surname, let nationality = isAppOnline ? users[index].nat : realmUsers[index].nationality, let picture = isAppOnline ? users[index].picture?.thumbnail : realmUsers[index].imageURL else { return ListingViewCellArguments() }
-        return ListingViewCellArguments(picture: picture, name: name, surname: surname, nationality: nationality)
+        if isOnline {
+            return ListingViewCellArguments(picture: users[index].picture?.thumbnail, name: users[index].name?.first, surname: users[index].name?.last, nationality: users[index].nat)
+        } else {
+            return ListingViewCellArguments(picture: realmUsers[index].imageURL, name: realmUsers[index].name, surname: realmUsers[index].surname, nationality: realmUsers[index].nationality)
+        }
     }
 
     func didSelectRow(at index: Int) {
-        guard let isAppOnline = isAppOnline, isAppOnline else {
-            DispatchQueue.main.async {
-                self.view?.showError(title: "Error", message: "No Connection", buttonTitle: "OK", completion: {})
+        var argument: DetailViewArguments?
+        if isOnline {
+            if let name = users[index].name?.first, let surname = users[index].name?.last, let nationality = users[index].nat, let picture = users[index].picture?.thumbnail, let id = users[index].id?.value, let location = users[index].location {
+                argument = DetailViewArguments(id: id, picture: picture, name: name, surname: surname, nationality: nationality, country: location.country, state: location.state, city: location.city, latitude: location.coordinates?.latitude, longitude: location.coordinates?.longitude)
             }
-            return
+        } else {
+            argument = DetailViewArguments(id: realmUsers[index].id, picture: realmUsers[index].imageURL, name: realmUsers[index].name, surname: realmUsers[index].surname, nationality: realmUsers[index].nationality, country: realmUsers[index].country, state: realmUsers[index].state, city: realmUsers[index].city, latitude: realmUsers[index].latitude, longitude: realmUsers[index].longitude)
         }
-        guard let name = users[index].name?.first, let surname = users[index].name?.last, let nationality = users[index].nat, let picture = users[index].picture?.thumbnail, let id = users[index].id, let location = users[index].location else { return }
-        let argument = DetailViewArguments(picture: picture, name: name, surname: surname, id: id, nationality: nationality,location: location )
+        guard let argument = argument else { return }
         view?.pushVC(argument: argument)
     }
 }
