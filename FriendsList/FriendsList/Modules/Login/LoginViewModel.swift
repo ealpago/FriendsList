@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import RealmSwift
 
 //MARK: Protocol
 protocol LoginViewModelInterface {
     func viewDidLoad()
     func loginButtonTapped()
+    func cleanCache()
 }
 
 //MARK: ViewModel
@@ -24,6 +26,13 @@ final class LoginViewModel {
 extension LoginViewModel: LoginViewModelInterface {
     func viewDidLoad() {
         view?.prepareUI()
+        cleanCache()
+    }
+
+    func cleanCache() {
+        DispatchQueue.main.async {
+            RealmManager.shared.removeRealmCache()
+        }
     }
 
     func loginButtonTapped() {
@@ -38,3 +47,4 @@ extension LoginViewModel: LoginViewModelInterface {
         view?.pushVC()
     }
 }
+
