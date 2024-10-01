@@ -8,13 +8,12 @@
 import UIKit
 
 //MARK: Protocol
-protocol LoginViewInterface: AnyObject, AlertPresentable {
+protocol LoginViewInterface: AlertPresentable {
     var userName: String { get }
     var password: String { get }
 
     func prepareUI()
     func pushVC()
-    func checkValidUsername(_ userName: String) -> Bool
 }
 
 //MARK: ViewController
@@ -43,7 +42,7 @@ final class LoginViewController: UIViewController {
     }
 
     //MARK: Actions
-    @IBAction private func loginButtonTappped(_ sender: UIButton) {
+    @IBAction private func loginButtonTappped() {
         viewModel.loginButtonTapped()
     }
 }
@@ -72,13 +71,6 @@ extension LoginViewController: LoginViewInterface {
         userNameTextField.delegate = self
         passwordTextField.delegate = self
     }
-
-    func checkValidUsername(_ userName: String) -> Bool {
-        let regexPattern = "^[a-z0-9]{5,7}$"
-        let regex = try! NSRegularExpression(pattern: regexPattern)
-        let range = NSRange(location: 0, length: userName.utf16.count)
-        return regex.firstMatch(in: userName, options: [], range: range) != nil
-    }
     
     var userName: String {
         userNameTextField.text ?? ""
@@ -89,6 +81,7 @@ extension LoginViewController: LoginViewInterface {
     }
 
     func pushVC() {
+        
         guard let vc = "ListingStoryboard".viewController(identifier: ListingViewController.identifier) as? ListingViewController else { return }
         navigationController?.pushViewController(vc, animated: true)
     }

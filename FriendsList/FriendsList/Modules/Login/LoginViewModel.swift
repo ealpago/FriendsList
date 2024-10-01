@@ -13,13 +13,24 @@ protocol LoginViewModelInterface {
     func viewDidLoad()
     func loginButtonTapped()
     func cleanCache()
+    //butonalrui tasio
 }
 
 //MARK: ViewModel
-final class LoginViewModel {
+extension LoginViewModel {
+    enum Constant {
+        static let validUserNameRegexPattern = "^[a-z0-9]{5,7}$"
+    }
+}
 
-    //MARK: Properties
+final class LoginViewModel {
     weak var view: LoginViewInterface?
+
+    private func checkValidUsername(_ userName: String) -> Bool {
+        guard let regex = try? NSRegularExpression(pattern: Constant.validUserNameRegexPattern) else { return false }
+        let range = NSRange(location: 0, length: userName.utf16.count)
+        return regex.firstMatch(in: userName, options: [], range: range) != nil
+    }
 }
 
 //MARK: Extension
@@ -30,6 +41,7 @@ extension LoginViewModel: LoginViewModelInterface {
     }
 
     func cleanCache() {
+        //temizle
         DispatchQueue.main.async {
             RealmManager.shared.removeRealmCache()
         }
@@ -40,8 +52,8 @@ extension LoginViewModel: LoginViewModelInterface {
             view?.showError(title: "Alert", message: "Username or Password is nil", buttonTitle: "OK", completion: {})
             return
         }
-        guard let isValidUserName = view?.checkValidUsername(userName), isValidUserName else {
-            view?.showError(title: "Alert", message: "Username is unvalid", buttonTitle: "OK", completion: {})
+        guard checkValidUsername(userName) else {
+            view?.showError(title: "Alert", message: "Username is invalid", buttonTitle: "OK", completion: {})
             return
         }
         view?.pushVC()
