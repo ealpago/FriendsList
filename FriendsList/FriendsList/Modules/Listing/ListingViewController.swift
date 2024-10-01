@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 //MARK: Protocol
 protocol ListingViewInterface: AnyObject, AlertPresentable, ProgressIndicatorPresentable {
@@ -30,6 +29,11 @@ final class ListingViewController: UIViewController {
         super.viewDidLoad()
         viewModel.view = self
         viewModel.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.viewWillApperar()
     }
 }
 

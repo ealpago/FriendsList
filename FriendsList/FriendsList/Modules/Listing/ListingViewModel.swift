@@ -12,6 +12,7 @@ protocol ListingViewModelInterface {
     var numberOfRowsInSection: Int { get }
 
     func viewDidLoad()
+    func viewWillApperar()
     func cellForRow(at index: Int) -> ListingViewCellArguments
     func didSelectRow(at index: Int)
 }
@@ -64,6 +65,9 @@ extension ListingViewModel: ListingViewModelInterface{
     func viewDidLoad() {
         view?.hideNavBar()
         view?.prepareTableView()
+    }
+
+    func viewWillApperar() {
         fetchData() { isOnline in
             self.isOnline = isOnline
             self.view?.reloadData()
