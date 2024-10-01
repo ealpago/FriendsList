@@ -12,11 +12,20 @@ protocol LoginViewInterface: AlertPresentable {
     var userName: String { get }
     var password: String { get }
 
-    func prepareUI()
+    func addTapGestureToSuperView()
+    func setTextFieldDelegate()
+    func endEditing()
+    func setLoginButtonEnable(isEnable: Bool)
     func pushVC()
 }
 
 //MARK: ViewController
+extension LoginViewController {
+    enum Constant {
+        static let listingStoryboardFileName = "ListingStoryboard"
+    }
+}
+
 final class LoginViewController: UIViewController {
 
     //MARK: Outlets
@@ -28,17 +37,16 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var loginButton: UIButton!
 
     //MARK: Properties
-    private lazy var viewModel = LoginViewModel()
+    private lazy var viewModel = LoginViewModel(view: self)
 
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.view = self
         viewModel.viewDidLoad()
     }
 
     @objc func dismissKeyboard() {
-        view.endEditing(true)
+        viewModel.dismissKeyboard()
     }
 
     //MARK: Actions
@@ -49,12 +57,12 @@ final class LoginViewController: UIViewController {
 
 //MARK: TextFieldDelegate
 extension LoginViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        loginButton.isUserInteractionEnabled = false
+    func textFieldDidBeginEditing() {
+        viewModel.textFieldDidBeginEditing()
     }
 
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-        loginButton.isUserInteractionEnabled = true
+    func textFieldDidEndEditing() {
+        viewModel.textFieldDidEndEditing()
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -65,24 +73,34 @@ extension LoginViewController: UITextFieldDelegate {
 
 //MARK: Extension
 extension LoginViewController: LoginViewInterface {
-    func prepareUI() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
-        userNameTextField.delegate = self
-        passwordTextField.delegate = self
-    }
-    
     var userName: String {
         userNameTextField.text ?? ""
     }
-    
+
     var password: String {
         passwordTextField.text ?? ""
     }
 
+    func addTapGestureToSuperView() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    func setTextFieldDelegate() {
+        userNameTextField.delegate = self
+        passwordTextField.delegate = self
+    }
+
+    func endEditing() {
+        view.endEditing(true)
+    }
+
+    func setLoginButtonEnable(isEnable: Bool) {
+        loginButton.isUserInteractionEnabled = isEnable
+    }
+
     func pushVC() {
-        
-        guard let vc = "ListingStoryboard".viewController(identifier: ListingViewController.identifier) as? ListingViewController else { return }
+        guard let vc = Constant.listingStoryboardFileName.viewController(identifier: ListingViewController.identifier) as? ListingViewController else { return }
         navigationController?.pushViewController(vc, animated: true)
     }
 }

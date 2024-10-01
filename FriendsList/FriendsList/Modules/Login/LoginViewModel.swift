@@ -11,20 +11,29 @@ import RealmSwift
 //MARK: Protocol
 protocol LoginViewModelInterface {
     func viewDidLoad()
+    func dismissKeyboard()
+    func textFieldDidBeginEditing()
+    func textFieldDidEndEditing()
     func loginButtonTapped()
-    func cleanCache()
-    //butonalrui tasio
 }
 
 //MARK: ViewModel
 extension LoginViewModel {
     enum Constant {
         static let validUserNameRegexPattern = "^[a-z0-9]{5,7}$"
+        static let alertTitle = "Alert"
+        static let nilAlertMessage = "Username or Password is nil"
+        static let regexErrorMessage = "Username is invalid"
+        static let alertButtonTitle = "OK"
     }
 }
 
 final class LoginViewModel {
-    weak var view: LoginViewInterface?
+    private weak var view: LoginViewInterface?
+
+    init(view: LoginViewInterface) {
+        self.view = view
+    }
 
     private func checkValidUsername(_ userName: String) -> Bool {
         guard let regex = try? NSRegularExpression(pattern: Constant.validUserNameRegexPattern) else { return false }
@@ -36,24 +45,29 @@ final class LoginViewModel {
 //MARK: Extension
 extension LoginViewModel: LoginViewModelInterface {
     func viewDidLoad() {
-        view?.prepareUI()
-        cleanCache()
+        view?.addTapGestureToSuperView()
+        view?.setTextFieldDelegate()
     }
 
-    func cleanCache() {
-        //temizle
-        DispatchQueue.main.async {
-            RealmManager.shared.removeRealmCache()
-        }
+    func dismissKeyboard() {
+        view?.endEditing()
+    }
+
+    func textFieldDidBeginEditing() {
+        view?.setLoginButtonEnable(isEnable: false)
+    }
+
+    func textFieldDidEndEditing() {
+        view?.setLoginButtonEnable(isEnable: true)
     }
 
     func loginButtonTapped() {
         guard let userName = view?.userName, !userName.isEmpty, let password = view?.password, !password.isEmpty else {
-            view?.showError(title: "Alert", message: "Username or Password is nil", buttonTitle: "OK", completion: {})
+            view?.showError(title: Constant.alertTitle, message: Constant.nilAlertMessage, buttonTitle: Constant.alertButtonTitle, completion: {})
             return
         }
         guard checkValidUsername(userName) else {
-            view?.showError(title: "Alert", message: "Username is invalid", buttonTitle: "OK", completion: {})
+            view?.showError(title:Constant.alertTitle, message: Constant.regexErrorMessage, buttonTitle: Constant.alertButtonTitle, completion: {})
             return
         }
         view?.pushVC()
