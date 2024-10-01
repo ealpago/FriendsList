@@ -10,7 +10,7 @@ import Foundation
 //MARK: Protocol
 protocol ListingViewModelInterface {
     var numberOfRowsInSection: Int { get }
-    var isAppOnline: Bool { get set }
+    var isAppOnline: Bool? { get set }
 
     func viewDidLoad()
     func viewWillApperar()
@@ -25,7 +25,7 @@ final class ListingViewModel {
     private weak var view: ListingViewInterface?
     private var users = [ResponseResult]()
     private var realmUsers = [CachedUser]()
-    private var isOnline: Bool = true
+    private var isOnline: Bool? = nil
     private let randomUserManager: RandomUserManagerInterface
 
     init(view: ListingViewInterface, randomUserManager: RandomUserManagerInterface = RandomUserManager.shared) {
@@ -69,9 +69,9 @@ final class ListingViewModel {
 
 //MARK: Extension
 extension ListingViewModel: ListingViewModelInterface{
-    var isAppOnline: Bool {
+    var isAppOnline: Bool? {
         get {
-            return isOnline
+            return isOnline ?? nil
         }
         set {
             isOnline = newValue
@@ -91,16 +91,18 @@ extension ListingViewModel: ListingViewModelInterface{
     }
 
     var numberOfRowsInSection: Int {
-        isAppOnline ? users.count : realmUsers.count
+        guard let isAppOnline = isAppOnline else { return 0 }
+        return isAppOnline ? users.count : realmUsers.count
     }
 
     func cellForRow(at index: Int) -> ListingViewCellArguments {
+        guard let isAppOnline = isAppOnline else { return ListingViewCellArguments() }
         guard let name = isAppOnline ? users[index].name?.first : realmUsers[index].name, let surname = isAppOnline ? users[index].name?.last : realmUsers[index].surname, let nationality = isAppOnline ? users[index].nat : realmUsers[index].nationality, let picture = isAppOnline ? users[index].picture?.thumbnail : realmUsers[index].imageURL else { return ListingViewCellArguments() }
         return ListingViewCellArguments(picture: picture, name: name, surname: surname, nationality: nationality)
     }
 
     func didSelectRow(at index: Int) {
-        guard isAppOnline else {
+        guard let isAppOnline = isAppOnline, isAppOnline else {
             DispatchQueue.main.async {
                 self.view?.showError(title: "Error", message: "No Connection", buttonTitle: "OK", completion: {})
             }
