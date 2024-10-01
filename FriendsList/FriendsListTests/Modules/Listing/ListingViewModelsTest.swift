@@ -12,39 +12,85 @@ final class ListingViewModelsTest: XCTestCase {
     private var viewModel: ListingViewModel!
     private var view: MockListingViewController!
     private var randomUserManager: MockRandomUserManager!
+    private var realmManager: MockRealmManager!
+
 
     override func setUp() {
         super.setUp()
         view = .init()
         randomUserManager = .init()
-        viewModel = .init(view: view, randomUserManager: randomUserManager)
+        realmManager = .init()
+        viewModel = .init(view: view, randomUserManager: randomUserManager, realmManager: realmManager)
     }
 
     override func tearDown() {
         super.tearDown()
     }
-    func test_numbberOfRows_whenAppOnline_userCount() {
-        viewModel.isAppOnline = true
 
-        XCTAssertEqual(viewModel.isAppOnline, true)
-    }
-
-    func test_numbberOfRows_whenAppOffline_realmUsersCount() {
-        viewModel.isAppOnline = false
-
-        XCTAssertEqual(viewModel.isAppOnline, false)
-    }
-
-    func test_viewDidLoad_InvokesRequiredMethods() {
+    //view?.reloadData()
+    func test_viewDidLoad_SuccessRandomUser_InvokesRequiredMethods() {
         //given
-        XCTAssertFalse(view.isBarHidden)
+        randomUserManager.stubbedResponse = .init(info: nil, results: [])
+        realmManager.stubbedFetchUsersFromRealmResult = []
+
         XCTAssertFalse(view.isTableViewInvoke)
+        XCTAssertFalse(view.isShowLoadingIndicatorInvoked)
+        XCTAssertFalse(randomUserManager.invokeFetchRandomUser)
+        XCTAssertFalse(view.isHideLoadingIndicatorInvoked)
+        XCTAssertFalse(realmManager.invokedRemoveRealmCache)
+        XCTAssertFalse(view.isReloadDataInvoke)
 
         //when
         viewModel.viewDidLoad()
 
         //then
-        XCTAssertEqual(view.barHiddenCount, 1)
-        XCTAssertEqual(view.invokeTableViewCount, 1)
+        XCTAssertTrue(view.isTableViewInvoke)
+        XCTAssertTrue(view.isShowLoadingIndicatorInvoked)
+        XCTAssertTrue(randomUserManager.invokeFetchRandomUser)
+        XCTAssertTrue(view.isHideLoadingIndicatorInvoked)
+        XCTAssertTrue(realmManager.invokedRemoveRealmCache)
+        XCTAssertTrue(view.isReloadDataInvoke)
+    }
+
+    func test_viewDidLoad_NetworkFailureWithCachedData_UsesCache() {
+        randomUserManager.stubbedResponse = nil
+        realmManager.stubbedFetchUsersFromRealmResult = [CachedUser()]
+
+        XCTAssertFalse(view.isTableViewInvoke)
+        XCTAssertFalse(view.isShowLoadingIndicatorInvoked)
+        XCTAssertFalse(randomUserManager.invokeFetchRandomUser)
+        XCTAssertFalse(view.isHideLoadingIndicatorInvoked)
+        XCTAssertFalse(view.isReloadDataInvoke)
+
+        //when
+        viewModel.viewDidLoad()
+
+        //then
+        XCTAssertTrue(view.isTableViewInvoke)
+        XCTAssertTrue(view.isShowLoadingIndicatorInvoked)
+        XCTAssertTrue(randomUserManager.invokeFetchRandomUser)
+        XCTAssertTrue(view.isHideLoadingIndicatorInvoked)
+        XCTAssertTrue(view.isReloadDataInvoke)
+    }
+
+    func test_viewDidLoad_CompleteFailure_ShowsError() {
+        randomUserManager.stubbedResponse = nil
+        realmManager.stubbedFetchUsersFromRealmResult = nil
+
+        XCTAssertFalse(view.isTableViewInvoke)
+        XCTAssertFalse(view.isShowLoadingIndicatorInvoked)
+        XCTAssertFalse(randomUserManager.invokeFetchRandomUser)
+        XCTAssertFalse(view.isHideLoadingIndicatorInvoked)
+        XCTAssertFalse(view.isShowErrorInvoked)
+        XCTAssertFalse(view.isReloadDataInvoke)
+
+        //when
+        viewModel.viewDidLoad()
+
+        //then
+        XCTAssertTrue(view.isTableViewInvoke)
+        XCTAssertTrue(view.isShowLoadingIndicatorInvoked)
+        XCTAssertTrue(randomUserManager.invokeFetchRandomUser)
+        XCTAssertTrue(view.isHideLoadingIndicatorInvoked)
     }
 }
