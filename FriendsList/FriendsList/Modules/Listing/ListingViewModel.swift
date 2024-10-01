@@ -35,7 +35,6 @@ final class ListingViewModel {
     private let randomUserManager: RandomUserManagerInterface
     private let realmManager: RealmManagerInterface
 
-
     init(view: ListingViewInterface, randomUserManager: RandomUserManagerInterface = RandomUserManager(), realmManager: RealmManagerInterface = RealmManager.shared) {
         self.view = view
         self.randomUserManager = randomUserManager
@@ -69,10 +68,8 @@ final class ListingViewModel {
     }
 
     private func saveDataToRealm(users: [ResponseResult]) {
-        DispatchQueue.main.async {
-            users.forEach { user in
-                self.realmManager.saveUserToRealm(user: user)
-            }
+        users.forEach { user in
+            self.realmManager.saveUserToRealm(user: user)
         }
     }
 }
