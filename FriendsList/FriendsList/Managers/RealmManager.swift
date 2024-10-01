@@ -7,14 +7,21 @@
 
 import RealmSwift
 
-class RealmManager {
+protocol RealmManagerInterface {
+    func performMigration()
+    func saveUserToRealm(user: ResponseResult)
+    func fetchUsersFromRealm() -> [CachedUser]
+    func removeRealmCache()
+}
+
+class RealmManager: RealmManagerInterface {
     static let shared = RealmManager()
 
-    init() {
+    private init() {
         performMigration()
     }
 
-    private func performMigration() {
+    func performMigration() {
         let config = Realm.Configuration(
             schemaVersion: 1, // Increment this number whenever you change the schema
             migrationBlock: { migration, oldSchemaVersion in
@@ -39,6 +46,11 @@ class RealmManager {
             cachedUser.surname = user.name?.last ?? ""
             cachedUser.nationality = user.nat ?? ""
             cachedUser.imageURL = user.picture?.thumbnail ?? ""
+            cachedUser.country = user.location?.country ?? ""
+            cachedUser.state = user.location?.state ?? ""
+            cachedUser.city = user.location?.city ?? ""
+            cachedUser.latitude = user.location?.coordinates?.latitude ?? ""
+            cachedUser.longitude = user.location?.coordinates?.longitude ?? ""
             try realm.write {
                 realm.add(cachedUser, update: .modified)
             }
