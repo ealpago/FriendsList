@@ -22,12 +22,11 @@ final class ListingViewController: UIViewController {
     @IBOutlet private weak var usersTableView: UITableView!
 
     //MARK: Properties
-    private lazy var viewModel = ListingViewModel()
+    private lazy var viewModel = ListingViewModel(view: self)
 
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.view = self
         viewModel.viewDidLoad()
     }
 

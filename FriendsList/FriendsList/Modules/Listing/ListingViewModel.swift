@@ -10,6 +10,7 @@ import Foundation
 //MARK: Protocol
 protocol ListingViewModelInterface {
     var numberOfRowsInSection: Int { get }
+    var isAppOnline: Bool { get set }
 
     func viewDidLoad()
     func viewWillApperar()
@@ -21,10 +22,14 @@ protocol ListingViewModelInterface {
 final class ListingViewModel {
 
     //MARK: Properties
-    weak var view: ListingViewInterface?
+    private weak var view: ListingViewInterface?
     private var users = [ResponseResult]()
     private var realmUsers = [CachedUser]()
     private var isOnline: Bool = true
+
+    init(view: ListingViewInterface) {
+        self.view = view
+    }
 
     //MARK: Functions
     func fetchData(completion: @escaping(Bool)->()) {
@@ -62,6 +67,15 @@ final class ListingViewModel {
 
 //MARK: Extension
 extension ListingViewModel: ListingViewModelInterface{
+    var isAppOnline: Bool {
+        get {
+            return isOnline
+        }
+        set {
+            isOnline = newValue
+        }
+    }
+
     func viewDidLoad() {
         view?.hideNavBar()
         view?.prepareTableView()
@@ -75,16 +89,16 @@ extension ListingViewModel: ListingViewModelInterface{
     }
 
     var numberOfRowsInSection: Int {
-        isOnline ? users.count : realmUsers.count
+        isAppOnline ? users.count : realmUsers.count
     }
 
     func cellForRow(at index: Int) -> ListingViewCellArguments {
-        guard let name = isOnline ? users[index].name?.first : realmUsers[index].name, let surname = isOnline ? users[index].name?.last : realmUsers[index].surname, let nationality = isOnline ? users[index].nat : realmUsers[index].nationality, let picture = isOnline ? users[index].picture?.thumbnail : realmUsers[index].imageURL else { return ListingViewCellArguments() }
+        guard let name = isAppOnline ? users[index].name?.first : realmUsers[index].name, let surname = isAppOnline ? users[index].name?.last : realmUsers[index].surname, let nationality = isAppOnline ? users[index].nat : realmUsers[index].nationality, let picture = isAppOnline ? users[index].picture?.thumbnail : realmUsers[index].imageURL else { return ListingViewCellArguments() }
         return ListingViewCellArguments(picture: picture, name: name, surname: surname, nationality: nationality)
     }
 
     func didSelectRow(at index: Int) {
-        guard isOnline else {
+        guard isAppOnline else {
             DispatchQueue.main.async {
                 self.view?.showError(title: "Error", message: "No Connection", buttonTitle: "OK", completion: {})
             }
