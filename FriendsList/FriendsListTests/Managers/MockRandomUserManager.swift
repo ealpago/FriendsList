@@ -1,0 +1,20 @@
+//
+//  MockRandomUserManager.swift
+//  FriendsListTests
+//
+//  Created by Emre Alpago on 1.10.2024.
+//
+
+@testable import FriendsList
+
+final class MockRandomUserManager: RandomUserManagerInterface {
+    var result: FriendsList.RandomUserResponse?
+
+    var invokeFetchRandomUser: Bool = false
+    var invokeFetchRandomUserCount: Int = 0
+
+    func fetchRandomUser(completion: @escaping (Result<FriendsList.RandomUserResponse, FriendsList.NetworkError>) -> ()) {
+        invokeFetchRandomUser = true
+        invokeFetchRandomUserCount += 1
+    }
+}
