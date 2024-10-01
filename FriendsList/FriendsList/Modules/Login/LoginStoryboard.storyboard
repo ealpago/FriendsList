@@ -53,7 +53,7 @@
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Login"/>
                                         <connections>
-                                            <action selector="loginButtonTappped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="LeX-dE-8Up"/>
+                                            <action selector="loginButtonTappped" destination="Y6W-OH-hqX" eventType="touchUpInside" id="GxK-ex-Ial"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -71,7 +71,6 @@
                     <connections>
                         <outlet property="containerView" destination="RLc-F6-JhF" id="maj-35-kZT"/>
                         <outlet property="imageView" destination="Jgs-pt-TiS" id="Q0k-cq-2Cy"/>
-                        <outlet property="loginButton" destination="cfr-x5-mAr" id="ZAb-1Z-cYP"/>
                         <outlet property="passwordTextField" destination="fQH-E9-AFw" id="seV-rv-e4c"/>
                         <outlet property="stackView" destination="Rna-nN-O3h" id="3Rz-ME-NME"/>
                         <outlet property="userNameTextField" destination="x2b-YU-CGX" id="pap-nm-r3w"/>
