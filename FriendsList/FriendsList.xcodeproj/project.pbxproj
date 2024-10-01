@@ -11,6 +11,7 @@
 		5ED88B8C3C153963F47FDCD3 /* Pods_FriendsList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22C929F262E4B7C5A198811 /* Pods_FriendsList.framework */; };
 		7C4A315F1CCC3FC9A2757694 /* Pods_FriendsList_FriendsListUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A68E5124DEC6C055EEF8F42 /* Pods_FriendsList_FriendsListUITests.framework */; };
 		D15C16832CABEF16008E3536 /* ListingViewModelsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C16822CABEF16008E3536 /* ListingViewModelsTest.swift */; };
+		D15C16852CABFB66008E3536 /* MockListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C16842CABFB66008E3536 /* MockListingViewController.swift */; };
 		D1E17B342CAADEC700F228A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B332CAADEC700F228A9 /* AppDelegate.swift */; };
 		D1E17B362CAADEC700F228A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B352CAADEC700F228A9 /* SceneDelegate.swift */; };
 		D1E17B3E2CAADEC700F228A9 /* FriendsList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B3C2CAADEC700F228A9 /* FriendsList.xcdatamodeld */; };
@@ -82,6 +83,7 @@
 		B8ECCF8157D5C321A2F3CDD9 /* Pods-FriendsList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendsList.debug.xcconfig"; path = "Target Support Files/Pods-FriendsList/Pods-FriendsList.debug.xcconfig"; sourceTree = "<group>"; };
 		C1781D28D06E43A9A436E0F3 /* Pods_FriendsListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FriendsListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D15C16822CABEF16008E3536 /* ListingViewModelsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingViewModelsTest.swift; sourceTree = "<group>"; };
+		D15C16842CABFB66008E3536 /* MockListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockListingViewController.swift; sourceTree = "<group>"; };
 		D1E17B302CAADEC700F228A9 /* FriendsList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendsList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E17B332CAADEC700F228A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1E17B352CAADEC700F228A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				D15C16822CABEF16008E3536 /* ListingViewModelsTest.swift */,
+				D15C16842CABFB66008E3536 /* MockListingViewController.swift */,
 			);
 			path = Listing;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 			files = (
 				D1E17B4E2CAADECA00F228A9 /* FriendsListTests.swift in Sources */,
 				D15C16832CABEF16008E3536 /* ListingViewModelsTest.swift in Sources */,
+				D15C16852CABFB66008E3536 /* MockListingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,7 +745,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -804,7 +808,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -890,6 +894,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N9KA4ZJ6RM;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
@@ -911,6 +916,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N9KA4ZJ6RM;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
