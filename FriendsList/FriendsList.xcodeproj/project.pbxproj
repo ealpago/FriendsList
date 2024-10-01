@@ -13,6 +13,7 @@
 		D15C16832CABEF16008E3536 /* ListingViewModelsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C16822CABEF16008E3536 /* ListingViewModelsTest.swift */; };
 		D15C16852CABFB66008E3536 /* MockListingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C16842CABFB66008E3536 /* MockListingViewController.swift */; };
 		D15C16882CAC1967008E3536 /* MockRandomUserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C16872CAC1967008E3536 /* MockRandomUserManager.swift */; };
+		D1D502C82CACB06A00235F88 /* MockRealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D502C72CACB06900235F88 /* MockRealmManager.swift */; };
 		D1E17B342CAADEC700F228A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B332CAADEC700F228A9 /* AppDelegate.swift */; };
 		D1E17B362CAADEC700F228A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B352CAADEC700F228A9 /* SceneDelegate.swift */; };
 		D1E17B3E2CAADEC700F228A9 /* FriendsList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B3C2CAADEC700F228A9 /* FriendsList.xcdatamodeld */; };
@@ -86,6 +87,7 @@
 		D15C16822CABEF16008E3536 /* ListingViewModelsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingViewModelsTest.swift; sourceTree = "<group>"; };
 		D15C16842CABFB66008E3536 /* MockListingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockListingViewController.swift; sourceTree = "<group>"; };
 		D15C16872CAC1967008E3536 /* MockRandomUserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRandomUserManager.swift; sourceTree = "<group>"; };
+		D1D502C72CACB06900235F88 /* MockRealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRealmManager.swift; sourceTree = "<group>"; };
 		D1E17B302CAADEC700F228A9 /* FriendsList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendsList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E17B332CAADEC700F228A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1E17B352CAADEC700F228A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				D15C16872CAC1967008E3536 /* MockRandomUserManager.swift */,
+				D1D502C72CACB06900235F88 /* MockRealmManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1E17B4E2CAADECA00F228A9 /* FriendsListTests.swift in Sources */,
+				D1D502C82CACB06A00235F88 /* MockRealmManager.swift in Sources */,
 				D15C16832CABEF16008E3536 /* ListingViewModelsTest.swift in Sources */,
 				D15C16852CABFB66008E3536 /* MockListingViewController.swift in Sources */,
 				D15C16882CAC1967008E3536 /* MockRandomUserManager.swift in Sources */,
