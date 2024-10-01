@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ProgressIndicatorPresentable {
+protocol ProgressIndicatorPresentable: AnyObject {
     func showLoadingIndicator()
     func hideLoadingIndicator()
 }
