@@ -13,4 +13,9 @@ class CachedUser: Object {
     @Persisted var surname: String = ""
     @Persisted var nationality: String? = ""
     @Persisted var imageURL: String = ""
+    @Persisted var country: String? = ""
+    @Persisted var state: String? = ""
+    @Persisted var city: String? = ""
+    @Persisted var latitude: String? = ""
+    @Persisted var longitude: String? = ""
 }
