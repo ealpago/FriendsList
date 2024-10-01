@@ -8,7 +8,8 @@
 @testable import FriendsList
 
 final class MockRandomUserManager: RandomUserManagerInterface {
-    var result: FriendsList.RandomUserResponse?
+    var stubbedResponse: FriendsList.RandomUserResponse?
+    var stubbedResult: Result<FriendsList.RandomUserResponse, FriendsList.NetworkError>?
 
     var invokeFetchRandomUser: Bool = false
     var invokeFetchRandomUserCount: Int = 0
@@ -16,7 +17,7 @@ final class MockRandomUserManager: RandomUserManagerInterface {
     func fetchRandomUser(completion: @escaping (Result<FriendsList.RandomUserResponse, FriendsList.NetworkError>) -> ()) {
         invokeFetchRandomUser = true
         invokeFetchRandomUserCount += 1
-        if let result = result {
+        if let result = stubbedResponse {
             completion(.success(result))
         } else {
             completion(.failure(.requestFailed))
