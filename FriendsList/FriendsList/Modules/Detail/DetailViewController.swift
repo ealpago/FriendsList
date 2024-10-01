@@ -10,23 +10,16 @@ import MapKit
 
 //MARK: Protocol
 protocol DetailViewInterface: AnyObject, AlertPresentable {
-    func prepareUIData()
+    func prepareProfileImage(image: String)
+    func prepareLabels(data: DetailViewArguments)
     func prepareUIConstraints()
-    func prepareMapKit()
+    func prepareMapKit(latitude: String, longitude: String)
 }
 
-//MARK: Arguments
-struct DetailViewArguments {
-    var picture: String?
-    var name: String?
-    var surname: String?
-    var id: Id?
-    var nationality: String?
-    var location: Location?
-
-    var fullName: String {
-        guard let name = name, let surname = surname else { return "" }
-        return name + " " + surname
+extension DetailViewController {
+    enum Constant {
+        static let currentLocationTitle = "Current Location"
+        static let invalidCoordinatesError = "Invalid coordinates"
     }
 }
 
@@ -51,13 +44,11 @@ final class DetailViewController: UIViewController {
     @IBOutlet private weak var mapViewWidthConstraints: NSLayoutConstraint!
 
     //MARK: Properties
-    private lazy var viewModel = DetailViewModel()
-    var arguments: DetailViewArguments?
+    var viewModel: DetailViewModelInterface!
 
     //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.view = self
         viewModel.viewDidLoad()
     }
 }
@@ -65,43 +56,36 @@ final class DetailViewController: UIViewController {
 //MARK: Extension
 extension DetailViewController: DetailViewInterface {
     func prepareUIConstraints() {
-        DispatchQueue.main.async { [weak self] in
-            if let self = self {
-                let width = view.frame.width
-                let height = view.frame.height
-                mapViewHeightConstraints.constant = height * 0.3
-                mapViewWidthConstraints.constant = width * 0.8
-            }
-        }
+        let width = view.frame.width
+        let height = view.frame.height
+        mapViewHeightConstraints.constant = height * 0.3
+        mapViewWidthConstraints.constant = width * 0.8
     }
 
-    func prepareUIData() {
-        guard let data = arguments else { return }
-        if let imageURL = data.picture {
-            profileImageView.setImage(from: imageURL)
-        }
+    func prepareProfileImage(image: String) {
+        profileImageView.setImage(from: image)
+    }
+
+    func prepareLabels(data: DetailViewArguments) {
         fullNameLabel.text = data.fullName
-        idLabel.text = data.id?.value
-        countryLabel.text = data.location?.country
-        stateLabel.text = data.location?.state
-        cityLabel.text = data.location?.city
+        idLabel.text = data.id
+        countryLabel.text = data.country
+        stateLabel.text = data.state
+        cityLabel.text = data.city
     }
 
-    func prepareMapKit() {
-        guard let data = arguments else { return }
-        if let latString = data.location?.coordinates?.latitude,
-           let lonString = data.location?.coordinates?.longitude,
-           let latitude = CLLocationDegrees(latString),
-           let longitude = CLLocationDegrees(lonString) {
+    func prepareMapKit(latitude: String, longitude: String) {
+        if let latitude = CLLocationDegrees(latitude),
+           let longitude = CLLocationDegrees(longitude) {
             let locationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             let region = MKCoordinateRegion(center: locationCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
             map.setRegion(region, animated: true)
             let annotation = MKPointAnnotation()
             annotation.coordinate = locationCoordinate
-            annotation.title = "Current Location"
+            annotation.title = Constant.currentLocationTitle
             map.addAnnotation(annotation)
         } else {
-            print("Invalid coordinates")
+            print(Constant.invalidCoordinatesError)
         }
     }
 }
