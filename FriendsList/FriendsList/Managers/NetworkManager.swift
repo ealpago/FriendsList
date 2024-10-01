@@ -38,13 +38,14 @@ enum NetworkError: Error {
     case decodingError(Error)
 }
 
-class NetworkManager {
+final class NetworkManager {
     static let shared = NetworkManager(session: URLSession(configuration: .default))
     private let session: URLSession
     
-    init(session: URLSession) {
+    private init(session: URLSession) {
         self.session = session
     }
+    
     public func request<T: Codable>(requestRoute: NetworkRouter, responseModel: T.Type, completion: @escaping (Result<T, NetworkError>) -> Void) {
         guard let url = URL(string: requestRoute.path) else {
             completion(.failure(.invalidURL))
@@ -53,19 +54,21 @@ class NetworkManager {
         var request = URLRequest(url: url)
         request.httpMethod = requestRoute.method.rawValue
         let task = session.dataTask(with: request) { data, response, error in
-            if error != nil {
-                completion(.failure(.requestFailed))
-                return
-            }
-            guard let data = data else {
-                completion(.failure(.requestFailed))
-                return
-            }
-            do {
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
-                completion(.success(decodedData))
-            } catch {
-                completion(.failure(.decodingError(error)))
+            DispatchQueue.main.async {
+                if error != nil {
+                    completion(.failure(.requestFailed))
+                    return
+                }
+                guard let data = data else {
+                    completion(.failure(.requestFailed))
+                    return
+                }
+                do {
+                    let decodedData = try JSONDecoder().decode(T.self, from: data)
+                    completion(.success(decodedData))
+                } catch {
+                    completion(.failure(.decodingError(error)))
+                }
             }
         }
         task.resume()
