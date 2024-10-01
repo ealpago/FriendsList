@@ -8,23 +8,29 @@
 @testable import FriendsList
 
 final class MockListingViewController: ListingViewInterface {
-    func hideNavBar() { }
+
+
+    var isBarHidden: Bool = false
+    var barHiddenCount: Int = 0
+    func hideNavBar() {
+        isBarHidden = true
+        barHiddenCount += 1
+    }
     
-    func prepareTableView() {  }
-    
+    var isTableViewInvoke: Bool = false
+    var invokeTableViewCount: Int = 0
+    func prepareTableView() {
+        isTableViewInvoke = true
+        invokeTableViewCount += 1
+    }
+
     func reloadData() { }
     
     func pushVC(argument: FriendsList.DetailViewArguments?) {  }
     
-    func showError(title: String, message: String, buttonTitle: String, completion: @escaping () -> ()) {
-
-    }
+    func showError(title: String, message: String, buttonTitle: String, completion: @escaping () -> ()) {}
     
-    func showLoadingIndicator() {
-
-    }
+    func showLoadingIndicator() {}
     
-    func hideLoadingIndicator() {
-        
-    }
+    func hideLoadingIndicator() {}
 }
