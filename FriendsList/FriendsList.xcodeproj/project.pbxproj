@@ -10,6 +10,7 @@
 		534AE3A905490FD502EE2D58 /* Pods_FriendsListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C1781D28D06E43A9A436E0F3 /* Pods_FriendsListTests.framework */; };
 		5ED88B8C3C153963F47FDCD3 /* Pods_FriendsList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F22C929F262E4B7C5A198811 /* Pods_FriendsList.framework */; };
 		7C4A315F1CCC3FC9A2757694 /* Pods_FriendsList_FriendsListUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A68E5124DEC6C055EEF8F42 /* Pods_FriendsList_FriendsListUITests.framework */; };
+		D15C16832CABEF16008E3536 /* ListingViewModelsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15C16822CABEF16008E3536 /* ListingViewModelsTest.swift */; };
 		D1E17B342CAADEC700F228A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B332CAADEC700F228A9 /* AppDelegate.swift */; };
 		D1E17B362CAADEC700F228A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B352CAADEC700F228A9 /* SceneDelegate.swift */; };
 		D1E17B3E2CAADEC700F228A9 /* FriendsList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D1E17B3C2CAADEC700F228A9 /* FriendsList.xcdatamodeld */; };
@@ -80,6 +81,7 @@
 		AEA22CC29B2BEDCCC0D95DD1 /* Pods-FriendsList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendsList.release.xcconfig"; path = "Target Support Files/Pods-FriendsList/Pods-FriendsList.release.xcconfig"; sourceTree = "<group>"; };
 		B8ECCF8157D5C321A2F3CDD9 /* Pods-FriendsList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FriendsList.debug.xcconfig"; path = "Target Support Files/Pods-FriendsList/Pods-FriendsList.debug.xcconfig"; sourceTree = "<group>"; };
 		C1781D28D06E43A9A436E0F3 /* Pods_FriendsListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FriendsListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D15C16822CABEF16008E3536 /* ListingViewModelsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingViewModelsTest.swift; sourceTree = "<group>"; };
 		D1E17B302CAADEC700F228A9 /* FriendsList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendsList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E17B332CAADEC700F228A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1E17B352CAADEC700F228A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -180,6 +182,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D15C16802CABEE94008E3536 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				D15C16812CABEE9C008E3536 /* Listing */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		D15C16812CABEE9C008E3536 /* Listing */ = {
+			isa = PBXGroup;
+			children = (
+				D15C16822CABEF16008E3536 /* ListingViewModelsTest.swift */,
+			);
+			path = Listing;
+			sourceTree = "<group>";
+		};
 		D1E17B272CAADEC700F228A9 = {
 			isa = PBXGroup;
 			children = (
@@ -222,6 +240,7 @@
 		D1E17B4C2CAADECA00F228A9 /* FriendsListTests */ = {
 			isa = PBXGroup;
 			children = (
+				D15C16802CABEE94008E3536 /* Modules */,
 				D1E17B4D2CAADECA00F228A9 /* FriendsListTests.swift */,
 			);
 			path = FriendsListTests;
@@ -645,6 +664,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1E17B4E2CAADECA00F228A9 /* FriendsListTests.swift in Sources */,
+				D15C16832CABEF16008E3536 /* ListingViewModelsTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
